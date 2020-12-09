@@ -60,7 +60,7 @@ public class DocTraceService {
     }
     
     public List<DocTrace> getByBarcode(Long barcode) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ?");
+        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by level desc");
         ps.setLong(1, barcode);
         ResultSet rs = ps.executeQuery();
         ArrayList<DocTrace> docTraces = new ArrayList<DocTrace>();
