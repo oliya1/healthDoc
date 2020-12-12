@@ -24,8 +24,7 @@ public class AppStart {
         // TODO code application logic here
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Common.setUIFont(new javax.swing.plaf.FontUIResource("b nazanin",Font.BOLD,12));
-                
+                Common.setUIFont(new javax.swing.plaf.FontUIResource("b nazanin",Font.BOLD,14));                
                 UIManager.put("OptionPane.okButtonText", "تایید");
                 new MainFrame().setVisible(true);
             }
