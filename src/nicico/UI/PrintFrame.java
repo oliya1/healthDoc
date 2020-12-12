@@ -214,8 +214,12 @@ public class PrintFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLNameFocusGained
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        new MainFrame().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new MainFrame().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(PrintFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void txtNationalCodeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNationalCodeFocusLost

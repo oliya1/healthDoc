@@ -43,6 +43,14 @@ public class UserService {
         }
         return user;
     }
+    public int createUser(User user) throws SQLException{
+        PreparedStatement ps = db.getConnection().prepareStatement("insert into user(user_name, name, usr_loc_id, rule) values(?,?,?,?)");
+        ps.setString(1, user.getUserName());
+        ps.setString(2, user.getName());
+        ps.setLong(3, user.getLocationId());
+        ps.setString(4, user.getRule());
+        return ps.executeUpdate();
+    }
 //    public static void main(String[] args){
 //        try {
 //            

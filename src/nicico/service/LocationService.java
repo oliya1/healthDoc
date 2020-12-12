@@ -8,6 +8,8 @@ package nicico.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import nicico.data.DataBase;
 import nicico.model.Location;
 
@@ -27,5 +29,17 @@ public class LocationService {
             location.setName(rs.getString("loc_name"));
         }
         return location;
-    }    
+    } 
+    public List<Location> getAll() throws SQLException{
+        PreparedStatement ps = db.getConnection().prepareStatement("select * from location");
+        ResultSet rs = ps.executeQuery();
+        List<Location> locations = new ArrayList<>();
+        while(rs.next()){
+            Location location = new Location();
+            location.setId(rs.getLong("loc_id"));
+            location.setName(rs.getString("loc_name"));
+            locations.add(location);
+        }
+        return locations;
+    }
 }

@@ -359,8 +359,14 @@ public class TraceFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBarcodeKeyReleased
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        new MainFrame().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new MainFrame().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void btnSabtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSabtActionPerformed
