@@ -26,7 +26,7 @@ public class DocTraceService {
         db = DataBase.getInstance();
     }
     public int getMaxLevel(Long barcode) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select ifnull(max(level),0) from workflow where barcode = ?");
+        PreparedStatement ps = db.getConnection().prepareStatement("select max(wf_level) from workflow where barcode = ?");
         ps.setLong(1, barcode);
         ResultSet rs = ps.executeQuery();
         int max = 0;
@@ -38,7 +38,7 @@ public class DocTraceService {
     
     
     public int insert(DocTrace dt) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("INSERT INTO workflow(barcode, date_time, level, cycle, sender_id, receiver_id, location_id)" + 
+        PreparedStatement ps = db.getConnection().prepareStatement("INSERT INTO workflow(barcode, date_time, wf_level, cycle, sender_id, receiver_id, location_id)" + 
                 "VALUES (?,?,?,?,?,?,?)");
         ps.setLong(1, dt.getBarcode());
         ps.setObject(2, dt.getDateTime());
@@ -60,13 +60,13 @@ public class DocTraceService {
     }
     
     public List<DocTrace> getByBarcode(Long barcode) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by level desc");
+        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by wf_level desc");
         ps.setLong(1, barcode);
         ResultSet rs = ps.executeQuery();
         ArrayList<DocTrace> docTraces = new ArrayList<DocTrace>();
         while(rs.next()){
             DocTrace docTrace = new DocTrace();
-            docTrace.setLevel(rs.getInt("level"));
+            docTrace.setLevel(rs.getInt("wf_level"));
             docTrace.setDateTime(rs.getObject("date_time", LocalDateTime.class));
             docTrace.setReceiverId(rs.getInt("receiver_id"));
             docTrace.setSenderId(rs.getInt("sender_id"));

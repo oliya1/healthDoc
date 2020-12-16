@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class UserService {
     private DataBase db = DataBase.getInstance();
     public List<User> getUsers() throws SQLException {
-        PreparedStatement ps = db.getConnection().prepareStatement("SELECT * FROM user");
+        PreparedStatement ps = db.getConnection().prepareStatement("SELECT * FROM tbl_user");
         ResultSet rs = ps.executeQuery();
         ArrayList<User> users = new ArrayList<>();
         while (rs.next()){
@@ -30,7 +30,7 @@ public class UserService {
         return users;
     }
     public User getUser(String userName) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from user where user_name = ?");
+        PreparedStatement ps = db.getConnection().prepareStatement("select * from tbl_user where user_name = ?");
         ps.setString(1, userName);
         ResultSet rs = ps.executeQuery();
         User user = new User();
@@ -44,7 +44,7 @@ public class UserService {
         return user;
     }
     public int createUser(User user) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("insert into user(user_name, name, usr_loc_id, rule) values(?,?,?,?)");
+        PreparedStatement ps = db.getConnection().prepareStatement("insert into tbl_user(user_name, name, usr_loc_id, rule) values(?,?,?,?)");
         ps.setString(1, user.getUserName());
         ps.setString(2, user.getName());
         ps.setLong(3, user.getLocationId());
