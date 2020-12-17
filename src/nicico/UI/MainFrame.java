@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import nicico.utility.Common;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -177,6 +179,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnGPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGPrintActionPerformed
         // TODO add your handling code here:
+        FileFilter filter = new FileNameExtensionFilter("Excel file", "xls", "xlsx");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
