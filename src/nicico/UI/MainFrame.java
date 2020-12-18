@@ -7,9 +7,14 @@ package nicico.UI;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -17,6 +22,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.data.JRCsvDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import nicico.utility.Common;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -192,7 +207,7 @@ public class MainFrame extends javax.swing.JFrame {
                 //Get first/desired sheet from the workbook
                 XSSFSheet sheet = workbook.getSheetAt(0);
                 Iterator<Row> itr = sheet.iterator();
-                ArrayList<Integer> personnelNoList = new ArrayList<>();
+                ArrayList<String> personnelNoList = new ArrayList<>();
                 while(itr.hasNext()){
                     Row row = itr.next();
                     Iterator<Cell> cellIterator = row.cellIterator();
@@ -208,10 +223,11 @@ public class MainFrame extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
                             return;    
                         }
-                        personnelNoList.add((int)cell.getNumericCellValue());
+                        personnelNoList.add(String.valueOf((int)cell.getNumericCellValue()));
                     }
                 }             
                 file.close();
+                createJasperViewer(personnelNoList);
             } 
             catch (Exception e) {
                     e.printStackTrace();
@@ -222,6 +238,67 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_btnGPrintActionPerformed
+    private void createJasperViewer(List<String> list) throws JRException{
+        List<Map<String,?>> maps = new ArrayList<>();
+//        for(int i=1; i<=10; i++){
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("p1", 980660);
+//            map.put("p2", 123456);
+//            map.put("p3", 987654);
+//            map.put("p4", 654321);
+//            map.put("p5", 111111);
+//            maps.add(map);
+//        }
+        int i = 0;
+        Map<String, Object> map = new HashMap<>();
+        for(String s : list){            
+            i++;
+            map.put("p"+i, s);
+            if(i==5){
+                maps.add(map);
+                map = new HashMap<>();
+                i=0;
+            }
+        }
+        maps.add(map);
+        JRDataSource dataSource = new JRBeanCollectionDataSource(maps);
+        String sourceName = "barcode1.jrxml";
+        JasperReport report = JasperCompileManager.compileReport(sourceName);
+        JasperPrint fillReport = JasperFillManager.fillReport(report, null, dataSource);
+        JasperViewer.viewReport(fillReport, false);
+    }
+    private void createVcs(List<String> list) throws JRException, FileNotFoundException {
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new File("NewData.csv"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        String columnNamesList = "p1 p2 p3 p4 p5";
+        builder.append(columnNamesList +"\n");
+        int i = 0;
+        String row = "";
+        for(String s : list){
+            row += s;
+            i++;
+            if(i%5 != 0){
+                row += " ";
+                continue;
+            }
+            builder.append(row + "\n");
+            row = "";
+        }
+        builder.append(row);
+        pw.write(builder.toString());
+        pw.close();
+        System.out.println("done!");
+        FileInputStream file = new FileInputStream("src/nicico/report/barcode.jasper");
+        JasperReport name = (JasperReport) JRLoader.loadObject(file);
+        JRCsvDataSource jrCsvDataSource = new JRCsvDataSource(JRLoader.getLocationInputStream("NewData.csv"));
+        JasperPrint fillReport = JasperFillManager.fillReport(name, null, jrCsvDataSource);        
+        JasperViewer.viewReport(fillReport);       
+    }
     private JLabel msg;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
