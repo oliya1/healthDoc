@@ -240,15 +240,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGPrintActionPerformed
     private void createJasperViewer(List<String> list) throws JRException{
         List<Map<String,?>> maps = new ArrayList<>();
-//        for(int i=1; i<=10; i++){
-//            Map<String, Object> map = new HashMap<>();
-//            map.put("p1", 980660);
-//            map.put("p2", 123456);
-//            map.put("p3", 987654);
-//            map.put("p4", 654321);
-//            map.put("p5", 111111);
-//            maps.add(map);
-//        }
         int i = 0;
         Map<String, Object> map = new HashMap<>();
         for(String s : list){            
