@@ -3,22 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/data/DataBase.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/model/DocTrace.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/MainFrameNew.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/model/User.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/MainFrame.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/service/LocationService.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/autoReceive.java</file>
             <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/service/SickService.java</file>
             <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/TraceFrame.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/service/DocTraceService.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/MainFrame.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/AppStart.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/model/Location.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/utility/Common.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/ComboItem.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/PrintFrame.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/service/UserService.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/model/DocTrace.java</file>
             <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/AdminFrame.java</file>
-            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/service/LocationService.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/AppStart.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/MainFrameNew.java</file>
+            <file>file:/C:/Users/Hamed/Documents/GitHub/healthDoc/src/nicico/UI/PrintFrame.java</file>
         </group>
     </open-files>
 </project-private>

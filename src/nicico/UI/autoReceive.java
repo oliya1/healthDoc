@@ -6,6 +6,8 @@
 package nicico.UI;
 
 import java.awt.ComponentOrientation;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -32,7 +34,9 @@ public class autoReceive extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecevie = new javax.swing.JTable();
         txtRecevie = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnConfirm = new javax.swing.JButton();
+        lblCount = new javax.swing.JLabel();
+        btnRemove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -44,14 +48,14 @@ public class autoReceive extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ردیف", "کد ملی"
+                "کد ملی"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,38 +80,62 @@ public class autoReceive extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("تایید");
-        jButton1.setFocusable(false);
+        btnConfirm.setText("تایید");
+        btnConfirm.setFocusable(false);
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
+
+        lblCount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCount.setFocusable(false);
+
+        btnRemove.setText("حذف");
+        btnRemove.setFocusable(false);
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 60, Short.MAX_VALUE)
-                        .addComponent(txtRecevie, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtRecevie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, Short.MAX_VALUE)))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(txtRecevie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(lblCount, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirm)
+                    .addComponent(btnRemove))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -115,9 +143,16 @@ public class autoReceive extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtRecevieKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecevieKeyReleased
-        // TODO add your handling code here:
         if(txtRecevie.getText().length()==10){
-            System.out.println(txtRecevie.getText());
+            for(int i=0; i<tblRecevie.getModel().getRowCount(); i++){
+                if(tblRecevie.getValueAt(i, 0).equals(txtRecevie.getText())){
+                    txtRecevie.setText("");
+                    return;
+                }
+            }
+            DefaultTableModel model = (DefaultTableModel)tblRecevie.getModel();            
+            model.addRow(new Object[]{txtRecevie.getText()});
+            lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
             txtRecevie.setText("");
         }
     }//GEN-LAST:event_txtRecevieKeyReleased
@@ -128,6 +163,19 @@ public class autoReceive extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtRecevieKeyTyped
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        int[] rows = tblRecevie.getSelectedRows();
+        DefaultTableModel model = (DefaultTableModel)tblRecevie.getModel();
+        for(int i=rows.length-1; i>=0; i--){
+            model.removeRow(rows[i]);
+        }
+        lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,8 +213,10 @@ public class autoReceive extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnConfirm;
+    private javax.swing.JButton btnRemove;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCount;
     private javax.swing.JTable tblRecevie;
     private javax.swing.JTextField txtRecevie;
     // End of variables declaration//GEN-END:variables
