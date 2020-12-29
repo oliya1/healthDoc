@@ -72,6 +72,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnAdmin = new javax.swing.JButton();
         btnGPrint = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnAutoReceive = new javax.swing.JButton();
+        btnAutoSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -114,49 +116,59 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nicico/UI/cooper_arm.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
+        btnAutoReceive.setText("دریافت خودکار");
+        btnAutoReceive.setFocusable(false);
+        btnAutoReceive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoReceiveActionPerformed(evt);
+            }
+        });
+
+        btnAutoSend.setText("ارسال خودکار");
+        btnAutoSend.setFocusable(false);
+        btnAutoSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoSendActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(btnTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(btnGPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAutoReceive, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAutoSend, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(btnPrint))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(btnTrace))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(btnGPrint))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(btnAdmin)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(btnTrace)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAutoReceive)
+                        .addGap(17, 17, 17)
+                        .addComponent(btnAutoSend)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPrint)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGPrint)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdmin))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -189,7 +201,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        new AdminFrame().setVisible(true);
+        new AdminFrame().setVisible(true);        
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnGPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGPrintActionPerformed
@@ -213,17 +225,17 @@ public class MainFrame extends javax.swing.JFrame {
                     Iterator<Cell> cellIterator = row.cellIterator();
                     while(cellIterator.hasNext()){
                         Cell cell = cellIterator.next();
-                        if(cell.getCellTypeEnum()!= CellType.NUMERIC){  
-                            msg.setText("فرمت فایل اکسل وارد شده صحیح نمیباشد.");
-                            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        if(String.valueOf((int)cell.getNumericCellValue()).length()!= 6){
-                            msg.setText("طول اطلاعات سلول بیشتر از 6 کارکتر است.");
+//                        if(cell.getCellTypeEnum()!= CellType.NUMERIC){  
+//                            msg.setText("فرمت فایل اکسل وارد شده صحیح نمیباشد.");
+//                            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+//                            return;
+//                        }
+                        if(cell.getStringCellValue().length()!= 10){
+                            msg.setText("طول اطلاعات سلول 10 کارکتر نیست.");
                             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
                             return;    
                         }
-                        personnelNoList.add(String.valueOf((int)cell.getNumericCellValue()));
+                        personnelNoList.add(cell.getStringCellValue());
                     }
                 }             
                 file.close();
@@ -238,6 +250,15 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_btnGPrintActionPerformed
+
+    private void btnAutoReceiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoReceiveActionPerformed
+        new AutoReceive().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAutoReceiveActionPerformed
+
+    private void btnAutoSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoSendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAutoSendActionPerformed
     private void createJasperViewer(List<String> list) throws JRException{
         List<Map<String,?>> maps = new ArrayList<>();
         int i = 0;
@@ -294,6 +315,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnAutoReceive;
+    private javax.swing.JButton btnAutoSend;
     private javax.swing.JButton btnGPrint;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnTrace;

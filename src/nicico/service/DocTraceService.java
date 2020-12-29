@@ -25,9 +25,9 @@ public class DocTraceService {
     public DocTraceService(){
         db = DataBase.getInstance();
     }
-    public int getMaxLevel(Long barcode) throws SQLException{
+    public int getMaxLevel(String barcode) throws SQLException{
         PreparedStatement ps = db.getConnection().prepareStatement("select max(wf_level) from workflow where barcode = ?");
-        ps.setLong(1, barcode);
+        ps.setString(1, barcode);
         ResultSet rs = ps.executeQuery();
         int max = 0;
         if (rs.next()) {
@@ -40,7 +40,7 @@ public class DocTraceService {
     public int insert(DocTrace dt) throws SQLException{
         PreparedStatement ps = db.getConnection().prepareStatement("INSERT INTO workflow(barcode, date_time, wf_level, cycle, sender_id, receiver_id, location_id)" + 
                 "VALUES (?,?,?,?,?,?,?)");
-        ps.setLong(1, dt.getBarcode());
+        ps.setString(1, dt.getBarcode());
         ps.setObject(2, dt.getDateTime());
         ps.setInt(3, dt.getLevel());
         ps.setInt(4, dt.getCycle());

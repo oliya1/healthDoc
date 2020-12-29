@@ -18,7 +18,7 @@ import nicico.utility.Common;
  */
 public class DocTrace {
     private Long id;
-    private Long barcode;
+    private String barcode;
     private LocalDateTime dateTime;    
     private Integer level;
     private Integer cycle;
@@ -29,7 +29,7 @@ public class DocTrace {
     public DocTrace() {
     }
 
-    public Long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
@@ -89,7 +89,7 @@ public class DocTrace {
         this.id = id;
     }
 
-    public DocTrace(Long barcode, String receiver) throws SQLException {
+    public DocTrace(String barcode, String receiver) throws SQLException {
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;
@@ -106,7 +106,7 @@ public class DocTrace {
         this.level = docTraceService.getMaxLevel(barcode)+1;
     }
 
-    public DocTrace(Long barcode) throws SQLException {
+    public DocTrace(String barcode) throws SQLException {
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;

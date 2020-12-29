@@ -49,4 +49,19 @@ public class SickService {
         }
         return sick;
     }
+    
+    public Sick getByNationalCode(String nationalCode) throws SQLException{
+        PreparedStatement ps = db.getConnection().prepareStatement("select * from sick where national_code = ?");
+        ps.setString(1, nationalCode);
+        ResultSet rs = ps.executeQuery();
+        Sick sick = null;
+        if(rs.next()){
+            sick = new Sick();
+            sick.setFname(rs.getString("fname"));
+            sick.setLname(rs.getString("lname"));
+            sick.setNationalCode(rs.getString("national_code"));
+            sick.setPersonnelNo(rs.getInt("personnel_no"));
+        }
+        return sick;
+    }
 }

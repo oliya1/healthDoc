@@ -63,8 +63,6 @@ public class TraceFrame extends javax.swing.JFrame {
         btnRefresh = new javax.swing.JButton();
         lblSick = new javax.swing.JLabel();
         btnEnd = new javax.swing.JButton();
-        boxReceive = new javax.swing.JCheckBox();
-        boxSend = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -163,29 +161,13 @@ public class TraceFrame extends javax.swing.JFrame {
         btnEnd.setText("اختتام");
         btnEnd.setFocusable(false);
 
-        boxReceive.setText("دریافت خودکار");
-        boxReceive.setFocusable(false);
-        boxReceive.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxReceiveActionPerformed(evt);
-            }
-        });
-
-        boxSend.setText("ارسال خودکار");
-        boxSend.setFocusable(false);
-        boxSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxSendActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(101, 101, 101)
@@ -195,10 +177,6 @@ public class TraceFrame extends javax.swing.JFrame {
                 .addGap(45, 45, 45))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boxReceive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(boxSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -233,39 +211,37 @@ public class TraceFrame extends javax.swing.JFrame {
                             .addComponent(txtBarcode)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnSabt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(boxReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmbSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boxSend))
+                    .addComponent(btnEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUser)
                     .addComponent(lblSick))
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(666, 377));
+        setSize(new java.awt.Dimension(575, 377));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {                                        
             DocTrace docTrace = null;
-            maxLevel = docTraceService.getMaxLevel(Long.valueOf(txtBarcode.getText()));
+            maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
             Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel).findFirst();
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
             if((maxDocTrace != null) && (Common.getLoginedUser().getLocationId() == maxDocTrace.getLocationId())){                
                     try {
                         ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
-                        docTrace = new DocTrace(Long.valueOf(txtBarcode.getText()), selectItem.getValue());
+                        docTrace = new DocTrace(txtBarcode.getText(), selectItem.getValue());
                     }
                     catch (SQLException ex) {
                         Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -342,16 +318,17 @@ public class TraceFrame extends javax.swing.JFrame {
     private void txtBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyReleased
         // TODO add your handling code here:  
         DefaultTableModel model = (DefaultTableModel) grid.getModel();
-        if(txtBarcode.getText().length()== 16){
+        if(txtBarcode.getText().length()== 10){
             try {
                 model.setRowCount(0);
-                Sick sick = sickService.getByPersonnelNo(Integer.valueOf(txtBarcode.getText().substring(0, 6)));
+                Sick sick = sickService.getByNationalCode(txtBarcode.getText());
                 if(sick == null){
-                    JLabel messageLabel = new JLabel("بارکد وارد شده صحیح نمی باشد.",JLabel.RIGHT);
+                    JLabel messageLabel = new JLabel("بارکد وارد شده در سیستم وجود ندارد.",JLabel.RIGHT);
                     JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
-                    return;
                 }
-                lblSick.setText("پرونده: "+sick.getFname()+ " "+ sick.getLname());
+                else{
+                    lblSick.setText("پرونده: "+sick.getFname()+ " "+ sick.getLname());
+                }
                 txtBarcode.setEnabled(false);
                 btnSabt.setEnabled(true);
                 btnSave.setEnabled(true);                
@@ -395,7 +372,7 @@ public class TraceFrame extends javax.swing.JFrame {
     private void btnSabtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSabtActionPerformed
         try {
             // TODO add your handling code here:
-            maxLevel = docTraceService.getMaxLevel(Long.valueOf(txtBarcode.getText()));
+            maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
             if(maxLevel>0){
                 DocTrace maxDocTrace = docTraces.stream().filter(d->d.getLevel()==maxLevel).findFirst().get();
                 loginedUser = userService.getUser(Common.getLoginedUserName());
@@ -405,7 +382,7 @@ public class TraceFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
                     }
                     else {
-                        docTraceService.insert(new DocTrace(Long.valueOf(txtBarcode.getText())));
+                        docTraceService.insert(new DocTrace(txtBarcode.getText()));
                         txtBarcodeKeyReleased(null);
                     }
                 }
@@ -415,7 +392,7 @@ public class TraceFrame extends javax.swing.JFrame {
                 }
             }
             else{
-                docTraceService.insert(new DocTrace(Long.valueOf(txtBarcode.getText())));
+                docTraceService.insert(new DocTrace(txtBarcode.getText()));
                 txtBarcodeKeyReleased(null);
             }
         } catch (SQLException ex) {
@@ -430,19 +407,6 @@ public class TraceFrame extends javax.swing.JFrame {
         txtBarcodeKeyReleased(null);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-    private void boxReceiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxReceiveActionPerformed
-        // TODO add your handling code here:
-        if(boxSend.isSelected()){
-            boxSend.setSelected(false);
-        }
-    }//GEN-LAST:event_boxReceiveActionPerformed
-
-    private void boxSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxSendActionPerformed
-        if(boxReceive.isSelected()){
-            boxReceive.setSelected(false);
-        }
-    }//GEN-LAST:event_boxSendActionPerformed
-
     List<User> users = new ArrayList<>();
     List<DocTrace> docTraces;
     final UserService userService = new UserService();
@@ -456,8 +420,6 @@ public class TraceFrame extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox boxReceive;
-    private javax.swing.JCheckBox boxSend;
     private javax.swing.JButton btnEnd;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnRefresh;

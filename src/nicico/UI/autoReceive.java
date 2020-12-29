@@ -6,19 +6,27 @@
 package nicico.UI;
 
 import java.awt.ComponentOrientation;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import nicico.model.DocTrace;
+import nicico.service.DocTraceService;
 
 /**
  *
  * @author Hamed
  */
-public class autoReceive extends javax.swing.JFrame {
+public class AutoReceive extends javax.swing.JFrame {
 
     /**
      * Creates new form autoReceive
      */
-    public autoReceive() {
+    public AutoReceive() {
         initComponents();
     }
 
@@ -31,6 +39,7 @@ public class autoReceive extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        optionPane = new javax.swing.JOptionPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecevie = new javax.swing.JTable();
         txtRecevie = new javax.swing.JTextField();
@@ -38,10 +47,15 @@ public class autoReceive extends javax.swing.JFrame {
         lblCount = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setResizable(false);
         setType(java.awt.Window.Type.POPUP);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         tblRecevie.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,7 +179,31 @@ public class autoReceive extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRecevieKeyTyped
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
-        // TODO add your handling code here:
+        DocTraceService docTraceService = new DocTraceService();
+        int count = 0;
+        for(int i=0; i<tblRecevie.getModel().getRowCount(); i++){
+            String nationalCode = tblRecevie.getValueAt(i, 0).toString();
+            try {
+                DocTrace docTrace = new DocTrace(nationalCode);
+                int insert = docTraceService.insert(docTrace);
+                if(insert == 1){
+                    count++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AutoReceive.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        String[] options = {"تایید"};
+        this.setAlwaysOnTop(false);
+        
+        JOptionPane optionPane = new JOptionPane();
+        int res = optionPane.showOptionDialog(null, "تعداد " + count + " پرونده دریافت شد.", null, JOptionPane.OK_OPTION,
+        JOptionPane.INFORMATION_MESSAGE, null, options, null);
+        if(res == 0){
+            DefaultTableModel model = (DefaultTableModel) tblRecevie.getModel();
+            model.setRowCount(0);
+            lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
+        }
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -175,7 +213,16 @@ public class autoReceive extends javax.swing.JFrame {
             model.removeRow(rows[i]);
         }
         lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
+        txtRecevie.setText("");
     }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            new MainFrame().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AutoReceive.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -194,20 +241,21 @@ public class autoReceive extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(autoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(autoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(autoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(autoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new autoReceive().setVisible(true);
+                new AutoReceive().setVisible(true);
             }
         });
     }
@@ -217,6 +265,7 @@ public class autoReceive extends javax.swing.JFrame {
     private javax.swing.JButton btnRemove;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCount;
+    private javax.swing.JOptionPane optionPane;
     private javax.swing.JTable tblRecevie;
     private javax.swing.JTextField txtRecevie;
     // End of variables declaration//GEN-END:variables
