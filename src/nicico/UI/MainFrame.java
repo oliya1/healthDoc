@@ -79,6 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("mainFrame"); // NOI18N
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         btnTrace.setText("رهگیری بارکد");
         btnTrace.setFocusable(false);
@@ -257,7 +258,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoReceiveActionPerformed
 
     private void btnAutoSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoSendActionPerformed
-        // TODO add your handling code here:
+        new AutoSend().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAutoSendActionPerformed
     private void createJasperViewer(List<String> list) throws JRException{
         List<Map<String,?>> maps = new ArrayList<>();

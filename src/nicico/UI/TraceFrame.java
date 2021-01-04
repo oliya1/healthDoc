@@ -68,6 +68,7 @@ public class TraceFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("traceFrame"); // NOI18N
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -293,9 +294,9 @@ public class TraceFrame extends javax.swing.JFrame {
         lblUser.setText("کاربر: " + Common.getLoginedUser().getName() + " (" + new LocationService().getById(Common.getLoginedUser().getLocationId()).getName() + ")");
         btnSabt.setEnabled(false);
         btnSave.setEnabled(false);
-            users = userService.getUsers();
-            List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
-            collect.forEach(u->cmbSend.addItem(new ComboItem(u.getName(),u.getUserName())));
+        users = userService.getUsers();
+        List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
+        collect.forEach(u->cmbSend.addItem(new ComboItem(u.getName(),u.getUserName())));
         } catch (SQLException ex) {
             Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
