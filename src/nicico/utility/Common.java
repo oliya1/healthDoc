@@ -41,11 +41,27 @@ public class Common {
             return arrayNationalCode[0] == 11 - temp;
     }
     public static String getLoginedUserName(){
+        try{
+            String name = new com.sun.security.auth.module.NTSystem().getName();
+            System.out.println(name);
+            return name;
+        }
+        catch(Exception e){
+            System.out.println("نتونست");
+            return "-";
+        }
 //        return System.getProperty("user.name");
-                return "tavoosi_m";
+//                return "tavoosi_m";
     }
     public static User getLoginedUser() throws SQLException {
-        return userService.getUser(getLoginedUserName());
+        User user = null;
+        try{
+            user = userService.getUser(getLoginedUserName());
+        }
+        catch(Exception e){
+            System.out.println("اوراکل مشکل دارد");
+        }
+        return user;
     }
     
     public static void setUIFont (javax.swing.plaf.FontUIResource f){
