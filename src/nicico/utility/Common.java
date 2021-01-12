@@ -41,8 +41,8 @@ public class Common {
             return arrayNationalCode[0] == 11 - temp;
     }
     public static String getLoginedUserName(){
-//        return System.getProperty("user.name");
-                return "tavoosi_m";
+        return System.getProperty("user.name");
+//                return "ham";
     }
     public static User getLoginedUser() throws SQLException {
         return userService.getUser(getLoginedUserName());

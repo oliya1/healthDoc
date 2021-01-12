@@ -51,10 +51,23 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() throws SQLException {
         initComponents();
-        if(Common.getLoginedUser().getRule().equalsIgnoreCase("admin")){
-            btnAdmin.setEnabled(true);
+        try{
+            if(Common.getLoginedUser().getRule() == null){
+                btnAdmin.setEnabled(false);
+                btnAutoReceive.setEnabled(false);
+                btnAutoSend.setEnabled(false);
+                btnTrace.setEnabled(false);
+                btnPrint.setEnabled(false);
+            }
+            msg = new JLabel("",JLabel.RIGHT);
         }
-        msg = new JLabel("",JLabel.RIGHT);
+        catch(Exception e){
+            btnAdmin.setEnabled(false);
+            btnAutoReceive.setEnabled(false);
+            btnAutoSend.setEnabled(false);
+            btnTrace.setEnabled(false);
+            btnPrint.setEnabled(false);
+        }
     }
 
     /**
@@ -98,7 +111,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         btnAdmin.setText("مدیریت");
-        btnAdmin.setEnabled(false);
         btnAdmin.setFocusable(false);
         btnAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,8 +213,24 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
-        new AdminFrame().setVisible(true);        
+        try {
+            // TODO add your handling code here:
+            if(Common.getLoginedUser().getRule().equalsIgnoreCase("admin")){
+                new AdminFrame().setVisible(true);
+            }
+            else{
+                msg.setText("شما به فرم مدیریت دسترسی ندارید");
+                JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            msg.setText("اتصال به دیتا بیس برقرار نشد.");
+            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(Exception ex){
+            msg.setText("شما به فرم مدیریت دسترسی ندارید");
+            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
+                
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnGPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGPrintActionPerformed
