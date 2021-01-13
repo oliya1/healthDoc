@@ -318,8 +318,8 @@ public class TraceFrame extends javax.swing.JFrame {
 
     private void txtBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyReleased
         // TODO add your handling code here:  
-        DefaultTableModel model = (DefaultTableModel) grid.getModel();
-        if(txtBarcode.getText().length()== 10){
+        DefaultTableModel model = (DefaultTableModel) grid.getModel();        
+        if(evt.getKeyChar() == '\n'){
             try {
                 model.setRowCount(0);
                 Sick sick = sickService.getByNationalCode(txtBarcode.getText());
