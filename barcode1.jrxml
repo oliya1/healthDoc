@@ -25,9 +25,9 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="48" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="22" width="121" height="20" uuid="e5f240cd-e068-4d93-a2ed-c8c6c043bc24">
+				<reportElement x="14" y="26" width="98" height="20" uuid="e5f240cd-e068-4d93-a2ed-c8c6c043bc24">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -36,19 +36,19 @@
 				<textFieldExpression><![CDATA[$F{p1}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="0" y="0" width="121" height="22" uuid="83a8102d-a2fa-49a1-8dea-ea539a088ac3"/>
+				<reportElement x="14" y="0" width="98" height="26" uuid="83a8102d-a2fa-49a1-8dea-ea539a088ac3"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{p1}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<componentElement>
-				<reportElement x="146" y="0" width="117" height="22" uuid="d8191298-b8bc-47a2-94fb-b52a1e500eac"/>
+				<reportElement x="160" y="0" width="94" height="26" uuid="d8191298-b8bc-47a2-94fb-b52a1e500eac"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{p2}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField isBlankWhenNull="true">
-				<reportElement x="146" y="22" width="117" height="20" uuid="dcb73e7e-ae3f-4335-90ba-83ecbdbd77cd">
+				<reportElement x="160" y="26" width="94" height="20" uuid="dcb73e7e-ae3f-4335-90ba-83ecbdbd77cd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -57,13 +57,13 @@
 				<textFieldExpression><![CDATA[$F{p2}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="291" y="0" width="117" height="22" uuid="745a92f0-0e9c-4916-a6b6-9b983ff350f8"/>
+				<reportElement x="305" y="0" width="94" height="26" uuid="745a92f0-0e9c-4916-a6b6-9b983ff350f8"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{p3}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField isBlankWhenNull="true">
-				<reportElement x="291" y="22" width="117" height="20" uuid="ebe35e00-f71d-48ae-8464-0841bae2bc62">
+				<reportElement x="305" y="26" width="94" height="20" uuid="ebe35e00-f71d-48ae-8464-0841bae2bc62">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -72,13 +72,13 @@
 				<textFieldExpression><![CDATA[$F{p3}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="435" y="1" width="120" height="21" uuid="18cd8d04-f65b-424d-a219-cd0ef27057e8"/>
+				<reportElement x="449" y="1" width="97" height="25" uuid="18cd8d04-f65b-424d-a219-cd0ef27057e8"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{p4}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField isBlankWhenNull="true">
-				<reportElement x="435" y="22" width="120" height="20" uuid="b69efdc2-5683-4cc7-8f13-249bd2c4e0b6">
+				<reportElement x="449" y="26" width="97" height="20" uuid="b69efdc2-5683-4cc7-8f13-249bd2c4e0b6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
 				</reportElement>
 				<textElement textAlignment="Center">

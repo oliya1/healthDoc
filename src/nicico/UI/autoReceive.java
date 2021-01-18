@@ -159,7 +159,24 @@ public class AutoReceive extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtRecevieKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecevieKeyReleased
-        if(txtRecevie.getText().length()==10){
+//        if(txtRecevie.getText().equals("\n")){
+//            for(int i=0; i<tblRecevie.getModel().getRowCount(); i++){
+//                if(tblRecevie.getValueAt(i, 0).equals(txtRecevie.getText())){
+//                    txtRecevie.setText("");
+//                    return;
+//                }
+//            }
+//            DefaultTableModel model = (DefaultTableModel)tblRecevie.getModel();            
+//            model.addRow(new Object[]{txtRecevie.getText()});
+//            lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
+//            txtRecevie.setText("");
+//        }
+    }//GEN-LAST:event_txtRecevieKeyReleased
+
+    private void txtRecevieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecevieKeyTyped
+        char enter = evt.getKeyChar();
+        if(enter == '\n'){
+            System.out.println("enter");
             for(int i=0; i<tblRecevie.getModel().getRowCount(); i++){
                 if(tblRecevie.getValueAt(i, 0).equals(txtRecevie.getText())){
                     txtRecevie.setText("");
@@ -171,10 +188,6 @@ public class AutoReceive extends javax.swing.JFrame {
             lblCount.setText("تعداد: "+String.valueOf(tblRecevie.getModel().getRowCount()));
             txtRecevie.setText("");
         }
-    }//GEN-LAST:event_txtRecevieKeyReleased
-
-    private void txtRecevieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecevieKeyTyped
-        char enter = evt.getKeyChar();
         if(!(Character.isDigit(enter))){
             evt.consume();
         }

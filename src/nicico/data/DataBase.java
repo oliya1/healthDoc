@@ -29,8 +29,8 @@ public class DataBase {
     }
 
     private DataBase() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","hami1234");
-//        connection = DriverManager.getConnection("jdbc:oracle:thin:@10.1.254.37:1521:dev","healthdoc","tandoc");
+//        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","hami1234");
+        connection = DriverManager.getConnection("jdbc:oracle:thin:@10.1.254.37:1521:dev","healthdoc","tandoc");
         statement = connection.createStatement();
     }
     public void closeConnection() throws SQLException{

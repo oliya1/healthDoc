@@ -89,7 +89,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnAutoSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setName("mainFrame"); // NOI18N
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
@@ -254,17 +253,17 @@ public class MainFrame extends javax.swing.JFrame {
                     Iterator<Cell> cellIterator = row.cellIterator();
                     while(cellIterator.hasNext()){
                         Cell cell = cellIterator.next();
-//                        if(cell.getCellTypeEnum()!= CellType.NUMERIC){  
-//                            msg.setText("فرمت فایل اکسل وارد شده صحیح نمیباشد.");
-//                            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
-//                            return;
-//                        }
-                        if(cell.getStringCellValue().length()!= 10){
-                            msg.setText("طول اطلاعات سلول 10 کارکتر نیست.");
+                        if(cell.getCellTypeEnum()!= CellType.NUMERIC){  
+                            msg.setText("فرمت فایل اکسل وارد شده صحیح نمیباشد.");
                             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
-                            return;    
+                            return;
                         }
-                        personnelNoList.add(cell.getStringCellValue());
+//                        if(cell.getStringCellValue().length()!= 10){
+//                            msg.setText("طول اطلاعات سلول 10 کارکتر نیست.");
+//                            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+//                            return;    
+//                        }
+                        personnelNoList.add(String.valueOf(Math.round(cell.getNumericCellValue())));
                     }
                 }             
                 file.close();
