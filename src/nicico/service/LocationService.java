@@ -5,13 +5,17 @@
  */
 package nicico.service;
 
+import com.google.gson.Gson;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import nicico.data.DataBase;
 import nicico.model.Location;
+import nicico.utility.Common;
 
 /**
  *
@@ -30,16 +34,18 @@ public class LocationService {
         }
         return location;
     } 
-    public List<Location> getAll() throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from location");
-        ResultSet rs = ps.executeQuery();
-        List<Location> locations = new ArrayList<>();
-        while(rs.next()){
-            Location location = new Location();
-            location.setId(rs.getLong("loc_id"));
-            location.setName(rs.getString("loc_name"));
-            locations.add(location);
-        }
-        return locations;
+    public List<Location> getAll() throws SQLException, IOException{
+//        PreparedStatement ps = db.getConnection().prepareStatement("select * from location");
+//        ResultSet rs = ps.executeQuery();
+//        List<Location> locations = new ArrayList<>();
+//        while(rs.next()){
+//            Location location = new Location();
+//            location.setId(rs.getLong("loc_id"));
+//            location.setName(rs.getString("loc_name"));
+//            locations.add(location);
+//        }
+        String data = Common.getJSON("http://localhost:8080/api/location/", 3000);
+        Location[] locations = new Gson().fromJson(data, Location[].class);
+        return Arrays.asList(locations);
     }
 }

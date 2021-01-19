@@ -5,6 +5,7 @@
  */
 package nicico.UI;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -158,6 +159,8 @@ public class AdminFrame extends javax.swing.JFrame {
             all.forEach(u->cmbLocation.addItem(new ComboItem(u.getName(),u.getId().toString())));
         } catch (SQLException ex) {
             Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e){
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, e);
         }
 
         
