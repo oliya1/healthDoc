@@ -295,7 +295,7 @@ public class MainFrame extends javax.swing.JFrame {
         for(String s : list){            
             i++;
             map.put("p"+i, s);
-            if(i==5){
+            if(i==4){
                 maps.add(map);
                 map = new HashMap<>();
                 i=0;

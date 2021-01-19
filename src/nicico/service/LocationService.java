@@ -16,22 +16,25 @@ import java.util.List;
 import nicico.data.DataBase;
 import nicico.model.Location;
 import nicico.utility.Common;
+import nicico.utility.SingltonGson;
 
 /**
  *
  * @author Hamed
  */
 public class LocationService {
-    private DataBase db = DataBase.getInstance();
-    public Location getById(Long id) throws SQLException {
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from location where loc_id = ?");
-        ps.setLong(1, id);
-        ResultSet rs = ps.executeQuery();
-        Location location = new Location();
-        if (rs.next()) {
-            location.setId(rs.getLong("loc_id"));
-            location.setName(rs.getString("loc_name"));
-        }
+//    private DataBase db = DataBase.getInstance();
+    public Location getById(Long id) throws SQLException, IOException {
+//        PreparedStatement ps = db.getConnection().prepareStatement("select * from location where loc_id = ?");
+//        ps.setLong(1, id);
+//        ResultSet rs = ps.executeQuery();
+//        Location location = new Location();
+//        if (rs.next()) {
+//            location.setId(rs.getLong("loc_id"));
+//            location.setName(rs.getString("loc_name"));
+//        }
+        String data = Common.getJSON("location/" + id, 3000);
+        Location location = SingltonGson.getGson().fromJson(data, Location.class);
         return location;
     } 
     public List<Location> getAll() throws SQLException, IOException{
@@ -44,8 +47,8 @@ public class LocationService {
 //            location.setName(rs.getString("loc_name"));
 //            locations.add(location);
 //        }
-        String data = Common.getJSON("http://localhost:8080/api/location/", 3000);
-        Location[] locations = new Gson().fromJson(data, Location[].class);
+        String data = Common.getJSON("location/", 3000);
+        Location[] locations = SingltonGson.getGson().fromJson(data, Location[].class);
         return Arrays.asList(locations);
     }
 }

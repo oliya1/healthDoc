@@ -67,6 +67,7 @@ public class Common {
     }
     
     public static String getJSON(String url, int timeout) throws IOException {
+        url = "http://localhost:8080/api/" + url;
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);

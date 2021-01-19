@@ -5,11 +5,10 @@ import com.nicico.healthDoc.entity.Location;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Data
@@ -20,5 +19,12 @@ public class LocationRestController {
     public ResponseEntity<List<Location>> getAllLocation(){
         List<Location> allLocation = locationRepository.findAll();
         return new ResponseEntity<>(allLocation, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Location> getById(@PathVariable(name = "id") long id){
+        Optional<Location> byId = locationRepository.findById(id);
+        Location location = byId.orElse(new Location());
+        return new ResponseEntity<>(location, HttpStatus.OK);
     }
 }
