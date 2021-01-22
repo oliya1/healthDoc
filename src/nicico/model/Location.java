@@ -17,16 +17,18 @@ public class Location {
         return id;
     }
 
-    public void setId(Long id) {
+    public Location setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Location setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Location() {

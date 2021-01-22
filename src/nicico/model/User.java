@@ -4,7 +4,7 @@ public class User {
     private int id;
     private String name;
     private String userName;
-    private Long locationId;
+    private Location location;
     private String rule;
     
     public int getId() {
@@ -32,12 +32,12 @@ public class User {
         this.userName = userName;
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public String getRule() {

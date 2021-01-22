@@ -3,13 +3,11 @@ package com.nicico.healthDoc.rest;
 
 import com.nicico.healthDoc.dao.UserRepository;
 import com.nicico.healthDoc.entity.User;
+import com.nicico.healthDoc.response.BaseResponse;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,5 +27,22 @@ class UserRestController {
     public ResponseEntity<List<User>> getAllUser(){
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PostMapping("/{userName}")
+    public ResponseEntity<BaseResponse> createUser(
+            @PathVariable String userName,
+            @RequestBody User user
+    ){
+        System.out.println(userName);
+        try {
+            userRepository.saveAndFlush(user);
+            return new ResponseEntity<>(new BaseResponse().setStatus(200).setMessage("عملیات با موفقیت انجام شد") ,HttpStatus.OK);
+        }
+        catch (Exception e){
+            BaseResponse response = new BaseResponse();
+            response.setMessage("");
+            return new ResponseEntity<>(new BaseResponse().setStatus(401).setMessage("نام کاربری تکراری است") ,HttpStatus.OK);
+        }
     }
 }

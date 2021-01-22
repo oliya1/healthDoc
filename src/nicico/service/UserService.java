@@ -1,5 +1,7 @@
 package nicico.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nicico.data.DataBase;
 import nicico.model.User;
 
@@ -10,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nicico.model.BaseResponse;
+import nicico.model.Location;
+import nicico.utility.Common;
+import nicico.utility.SingltonGson;
+import org.json.JSONObject;
 
 public class UserService {
     private DataBase db = DataBase.getInstance();
@@ -51,12 +58,18 @@ public class UserService {
         ps.setString(4, user.getRule());
         return ps.executeUpdate();
     }
-//    public static void main(String[] args){
-//        try {
-//            
-//            User user = new UserService().getUser("hamed");
-//                    } catch (SQLException ex) {
-//            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public static void main(String[] args) throws JsonProcessingException{
+        User user = new User();
+        user.setName("hamed").setUserName("jafari-o");
+        user.setRule("admin");
+        Location location = new Location();
+        location.setId(1L);
+        user.setLocation(location);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(user);
+        String excutePost = Common.excutePost("user/hamed", jsonString);
+        System.out.println(excutePost);
+        BaseResponse response = SingltonGson.getGson().fromJson(excutePost, BaseResponse.class);
+        System.out.println(response.getMessag());
+    }
 }
