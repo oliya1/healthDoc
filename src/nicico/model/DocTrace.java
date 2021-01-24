@@ -8,9 +8,12 @@ package nicico.model;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import nicico.service.DocTraceService;
 import nicico.service.UserService;
 import nicico.utility.Common;
+import oracle.jdbc.OracleDatabaseException;
 
 /**
  *
@@ -111,9 +114,9 @@ public class DocTrace {
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;
-        this.receiver = new User();
+        this.receiver = null;
         User sender = userService.getUser(Common.getLoginedUserName());
-        this.sender = new User();
+        this.sender = null;
 //        this.senderId = new UserService().getUser(Common.getLoginedUserName()).getId();
         this.cycle = 1;
         this.location = sender.getLocation();
@@ -121,8 +124,16 @@ public class DocTrace {
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
 //        this.dateTime = LocalDateTime.now();
-        int data = docTraceService.getMaxLevel(barcode).getData() == null ? 0 : docTraceService.getMaxLevel(barcode).getData()+1;
-        this.level = data;
+        BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(barcode);
+        Integer i = 0;
+        if(maxLevel.getStatus() == 200){
+            i = Integer.valueOf(String.valueOf(Math.round(maxLevel.getData())));
+        }else if(maxLevel.getStatus() == 201){
+            i = 0;
+        }else{
+            throw new ArithmeticException(maxLevel.getMessage());
+        }
+        this.level = i;
     }
     
 }

@@ -98,7 +98,7 @@ public class DocTraceService {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(DocTraceService.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        DocTrace docTrace = new DocTrace("2991743247");
+        DocTrace docTrace = new DocTrace("29917");
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(docTrace);
         String excutePost = Common.excutePost("doc-history/", jsonString);

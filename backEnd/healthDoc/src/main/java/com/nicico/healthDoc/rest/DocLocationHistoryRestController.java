@@ -37,7 +37,7 @@ public class DocLocationHistoryRestController {
             int maxLevel = docLocationHistoryRepository.getMaxLevel(barcode);
             response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(maxLevel);
         } catch(AopInvocationException e){
-            response.setStatus(500).setMessage("بارکد وارد شده در پایگاه داده وجود ندارد.");
+            response.setStatus(201).setMessage("بارکد وارد شده در پایگاه داده وجود ندارد.");
         } catch(Exception e){
             response.setStatus(500).setMessage("ارتباط با پایگاه داده برقرار نشد.");
         }
@@ -47,7 +47,7 @@ public class DocLocationHistoryRestController {
     public ResponseEntity create(@RequestBody DocLocationHistory docLocationHistory){
         BaseResponse response = new BaseResponse<Integer>();
         try {
-//            docLocationHistoryRepository.saveAndFlush(docLocationHistory);
+            docLocationHistoryRepository.saveAndFlush(docLocationHistory);
             response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.");
         } catch(Exception e){
             response.setStatus(500).setMessage("ارتباط با پایگاه داده برقرار نشد.");

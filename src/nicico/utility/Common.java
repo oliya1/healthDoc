@@ -8,10 +8,12 @@ package nicico.utility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -173,7 +175,8 @@ public class Common {
         //Send request
         DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream ());
-        wr.writeBytes (urlParameters);
+//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+        wr.write(urlParameters.getBytes());
         wr.flush ();
         wr.close ();
 
