@@ -204,7 +204,7 @@ public class MainFrame extends javax.swing.JFrame {
                 msg.setText("کاربر محترم شما به این فرم دسترسی ندارید.");
                 JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             msg.setText("ارتباط با سرور برقرار نشد.");
             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);

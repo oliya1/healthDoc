@@ -239,7 +239,7 @@ public class TraceFrame extends javax.swing.JFrame {
             maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
             Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel).findFirst();
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
-            if((maxDocTrace != null) && (Common.getLoginedUser().getLocationId() == maxDocTrace.getLocationId())){                
+            if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocationId())){                
                     try {
                         ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
                         docTrace = new DocTrace(txtBarcode.getText(), selectItem.getValue());
@@ -277,7 +277,7 @@ public class TraceFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
             }
         } 
-        catch (SQLException ex) {
+        catch (Exception ex) {
             Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -291,7 +291,7 @@ public class TraceFrame extends javax.swing.JFrame {
         grid.setDefaultRenderer(String.class, centerRenderer);
         grid.getColumnModel().getColumn(5).setPreferredWidth(30);
 
-        lblUser.setText("کاربر: " + Common.getLoginedUser().getName() + " (" + new LocationService().getById(Common.getLoginedUser().getLocationId()).getName() + ")");
+        lblUser.setText("کاربر: " + Common.getLoginedUser().getName() + " (" + new LocationService().getById(Common.getLoginedUser().getLocation().getId()).getName() + ")");
         btnSabt.setEnabled(false);
         btnSave.setEnabled(false);
         users = userService.getUsers();
@@ -377,7 +377,7 @@ public class TraceFrame extends javax.swing.JFrame {
             if(maxLevel>0){
                 DocTrace maxDocTrace = docTraces.stream().filter(d->d.getLevel()==maxLevel).findFirst().get();
                 loginedUser = userService.getUser(Common.getLoginedUserName());
-                if(maxDocTrace.getLocationId()!= loginedUser.getLocationId()){
+                if(maxDocTrace.getLocationId()!= loginedUser.getLocation().getId()){
                     if(maxDocTrace.getReceiverId() != loginedUser.getId()){
                         JLabel messageLabel = new JLabel("پرونده به شما ارجاع داده نشده است.",JLabel.RIGHT);
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
@@ -396,7 +396,7 @@ public class TraceFrame extends javax.swing.JFrame {
                 docTraceService.insert(new DocTrace(txtBarcode.getText()));
                 txtBarcodeKeyReleased(null);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
             JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);

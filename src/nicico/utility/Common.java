@@ -58,7 +58,7 @@ public class Common {
         return System.getProperty("user.name");
 //                return "ham";
     }
-    public static User getLoginedUser() throws SQLException {
+    public static User getLoginedUser() throws Exception {
         return userService.getUser(getLoginedUserName());
     }
     

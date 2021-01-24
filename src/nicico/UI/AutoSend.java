@@ -225,7 +225,7 @@ public class AutoSend extends javax.swing.JFrame {
                 if(insert == 1){
                     count++;
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(AutoSend.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -271,7 +271,7 @@ public class AutoSend extends javax.swing.JFrame {
             users = userService.getUsers();
             List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
             collect.forEach(u->cmbSend.addItem(new ComboItem(u.getName(),u.getUserName())));
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AutoSend.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
             JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);

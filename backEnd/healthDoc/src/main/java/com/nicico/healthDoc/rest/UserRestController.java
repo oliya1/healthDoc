@@ -17,9 +17,15 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 class UserRestController {
     final private UserRepository userRepository;
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id){
-        Optional<User> byId = userRepository.findById(id);
+//    @GetMapping("/{id}")
+//    public ResponseEntity<User> getUser(@PathVariable long id){
+//        Optional<User> byId = userRepository.findById(id);
+//        User user = byId.orElse(new User());
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
+    @GetMapping("/{userName}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName){
+        Optional<User> byId = userRepository.findByUserName(userName);
         User user = byId.orElse(new User());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

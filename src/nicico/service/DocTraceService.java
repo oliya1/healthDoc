@@ -5,16 +5,23 @@
  */
 package nicico.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nicico.data.DataBase;
+import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
+import nicico.model.Location;
+import nicico.utility.Common;
+import nicico.utility.SingltonGson;
 
 /**
  *
@@ -25,17 +32,20 @@ public class DocTraceService {
     public DocTraceService(){
         db = DataBase.getInstance();
     }
-    public int getMaxLevel(String barcode) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select max(wf_level) from workflow where barcode = ?");
-        ps.setString(1, barcode);
-        ResultSet rs = ps.executeQuery();
-        int max = 0;
-        if (rs.next()) {
-           max = rs.getInt(1);
-        }
-        return max;
-    }  
     
+    public BaseResponse<Integer> getMaxLevel(String barcode) throws Exception{
+//        PreparedStatement ps = db.getConnection().prepareStatement("select max(wf_level) from workflow where barcode = ?");
+//        ps.setString(1, barcode);
+//        ResultSet rs = ps.executeQuery();
+//        int max = 0;
+//        if (rs.next()) {
+//           max = rs.getInt(1);
+//        }
+//        return max;
+        String data = Common.getJSON("doc-history/max-level/" + barcode, 3000);
+        BaseResponse<Integer> fromJson = SingltonGson.getGson().fromJson(data, BaseResponse.class);
+        return fromJson;
+    }    
     
     public int insert(DocTrace dt) throws SQLException{
         PreparedStatement ps = db.getConnection().prepareStatement("INSERT INTO workflow(barcode, date_time, wf_level, cycle, sender_id, receiver_id, location_id)" + 
@@ -59,30 +69,41 @@ public class DocTraceService {
         return ps.executeUpdate();        
     }
     
-    public List<DocTrace> getByBarcode(Long barcode) throws SQLException{
-        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by wf_level desc");
-        ps.setLong(1, barcode);
-        ResultSet rs = ps.executeQuery();
-        ArrayList<DocTrace> docTraces = new ArrayList<DocTrace>();
-        while(rs.next()){
-            DocTrace docTrace = new DocTrace();
-            docTrace.setLevel(rs.getInt("wf_level"));
-            docTrace.setDateTime(rs.getObject("date_time", LocalDateTime.class));
-            docTrace.setReceiverId(rs.getInt("receiver_id"));
-            docTrace.setSenderId(rs.getInt("sender_id"));
-            docTrace.setLocationId(rs.getLong("location_id"));
-            docTrace.setId(rs.getLong("id"));
-            docTraces.add(docTrace);
-        }
-        return docTraces;
+    public List<DocTrace> getByBarcode(Long barcode) throws Exception{
+//        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by wf_level desc");
+//        ps.setLong(1, barcode);
+//        ResultSet rs = ps.executeQuery();
+//        ArrayList<DocTrace> docTraces = new ArrayList<DocTrace>();
+//        while(rs.next()){
+//            DocTrace docTrace = new DocTrace();
+//            docTrace.setLevel(rs.getInt("wf_level"));
+//            docTrace.setDateTime(rs.getObject("date_time", LocalDateTime.class));
+//            docTrace.setReceiverId(rs.getInt("receiver_id"));
+//            docTrace.setSenderId(rs.getInt("sender_id"));
+//            docTrace.setLocationId(rs.getLong("location_id"));
+//            docTrace.setId(rs.getLong("id"));
+//            docTraces.add(docTrace);
+//        }
+//        return docTraces;
+        String data = Common.getJSON("doc-history/", 3000);
+        BaseResponse<List<DocTrace>> fromJson = SingltonGson.getGson().fromJson(data, BaseResponse.class);
+        System.out.println(fromJson.getMessage());
+        List<DocTrace> docs = fromJson.getData();
+        return docs;
     }
-//    public static void main(String[] args){
-//            
+    
+    public static void main(String[] args) throws Exception{            
 //        try {
 //            new DocTraceService().getMaxLevel(9806602991743247l);
 //        } catch (SQLException ex) {
 //            Logger.getLogger(DocTraceService.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-//        
-//    }
+        DocTrace docTrace = new DocTrace("2991743247");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(docTrace);
+        String excutePost = Common.excutePost("doc-history/", jsonString);
+        System.out.println(excutePost);
+        BaseResponse<Integer> response = SingltonGson.getGson().fromJson(excutePost, BaseResponse.class);
+        System.out.println(response.getMessage());
+    }
 }

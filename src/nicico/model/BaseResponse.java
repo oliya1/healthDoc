@@ -9,9 +9,10 @@ package nicico.model;
  *
  * @author Hamed
  */
-public class BaseResponse {
+public class BaseResponse<T> {
     private int status;
     private String message;
+    private T data;
     
     public int getStatus(){
         return this.status;
@@ -19,10 +20,16 @@ public class BaseResponse {
     public void setStatuse(int status){
         this.status = status;
     }
-    public String getMessag(){
+    public String getMessage(){
         return this.message;
     }
     public void setMessage(String message){
         this.message = message;
+    }
+    public void setData(T data){
+        this.data = data;
+    }
+    public T getData(){
+        return this.data;
     }
 }

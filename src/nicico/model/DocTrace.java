@@ -22,9 +22,9 @@ public class DocTrace {
     private LocalDateTime dateTime;    
     private Integer level;
     private Integer cycle;
-    private Integer senderId;
-    private Integer receiverId;
-    private Long locationId;
+    private User sender;
+    private User receiver;
+    private Location location;
 
     public DocTrace() {
     }
@@ -41,12 +41,12 @@ public class DocTrace {
         return cycle;
     }
 
-    public Integer getSenderId() {
-        return senderId;
+    public User getSender() {
+        return this.sender;
     }
 
-    public Integer getReceiverId() {
-        return receiverId;
+    public User getReceiver() {
+        return this.receiver;
     }
     
     public LocalDateTime getDateTime() {
@@ -65,20 +65,20 @@ public class DocTrace {
         this.cycle = cycle;
     }
 
-    public void setSenderId(Integer senderId) {
-        this.senderId = senderId;
+    public void setSenderId(User sender) {
+        this.sender = sender;
     }
 
-    public void setReceiverId(Integer receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }  
 
-    public Long getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setLocationId(Location location) {
+        this.location = location;
     }   
 
     public Long getId() {
@@ -89,38 +89,40 @@ public class DocTrace {
         this.id = id;
     }
 
-    public DocTrace(String barcode, String receiver) throws SQLException {
+    public DocTrace(String barcode, String receiver) throws Exception {
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;
-        this.receiverId = userService.getUser(receiver).getId();
+        this.receiver = userService.getUser(receiver);
         User sender = userService.getUser(Common.getLoginedUserName());
-        this.senderId = sender.getId();
+        this.sender = sender;
 //        this.senderId = new UserService().getUser(Common.getLoginedUserName()).getId();
         this.cycle = 1;
-        this.locationId = sender.getLocationId();
+        this.location = sender.getLocation();
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
-        this.dateTime = LocalDateTime.now();
-        this.level = docTraceService.getMaxLevel(barcode)+1;
+//        this.dateTime = LocalDateTime.now();
+        int data = docTraceService.getMaxLevel(barcode).getData() == null ? 0 : docTraceService.getMaxLevel(barcode).getData()+1;
+        this.level = data;
     }
 
-    public DocTrace(String barcode) throws SQLException {
+    public DocTrace(String barcode) throws Exception {
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;
-        this.receiverId = 0;
+        this.receiver = new User();
         User sender = userService.getUser(Common.getLoginedUserName());
-        this.senderId = 0;
+        this.sender = new User();
 //        this.senderId = new UserService().getUser(Common.getLoginedUserName()).getId();
         this.cycle = 1;
-        this.locationId = sender.getLocationId();
+        this.location = sender.getLocation();
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
-        this.dateTime = LocalDateTime.now();
-        this.level = docTraceService.getMaxLevel(barcode)+1;
+//        this.dateTime = LocalDateTime.now();
+        int data = docTraceService.getMaxLevel(barcode).getData() == null ? 0 : docTraceService.getMaxLevel(barcode).getData()+1;
+        this.level = data;
     }
     
 }
