@@ -4,7 +4,6 @@ import com.nicico.healthDoc.dao.DocLocationHistoryRepository;
 import com.nicico.healthDoc.entity.DocLocationHistory;
 import com.nicico.healthDoc.response.BaseResponse;
 import lombok.Data;
-import org.hibernate.service.NullServiceException;
 import org.springframework.aop.AopInvocationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,14 +43,14 @@ public class DocLocationHistoryRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody DocLocationHistory docLocationHistory){
-        BaseResponse response = new BaseResponse<Integer>();
+    public ResponseEntity<BaseResponse<Integer>> create(@RequestBody DocLocationHistory docLocationHistory){
+        BaseResponse<Integer> response = new BaseResponse<>();
         try {
             docLocationHistoryRepository.saveAndFlush(docLocationHistory);
-            response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.");
+            response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(1);
         } catch(Exception e){
-            response.setStatus(500).setMessage("ارتباط با پایگاه داده برقرار نشد.");
+            response.setStatus(500).setMessage("ارتباط با پایگاه داده برقرار نشد.").setData(0);
         }
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

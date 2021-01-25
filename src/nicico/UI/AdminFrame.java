@@ -187,7 +187,7 @@ public class AdminFrame extends javax.swing.JFrame {
         user.setLocation(new Location().setId(Long.valueOf(selectItem.getValue())).setName(selectItem.getKey()));
         try {
             BaseResponse createUser = userService.createUser(user);
-            JLabel messageLabel = new JLabel(createUser.getMessag(),JLabel.RIGHT);
+            JLabel messageLabel = new JLabel(createUser.getMessage(),JLabel.RIGHT);
             JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);

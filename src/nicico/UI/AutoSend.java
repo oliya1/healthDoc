@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
 import nicico.model.User;
 import nicico.service.DocTraceService;
@@ -221,8 +222,8 @@ public class AutoSend extends javax.swing.JFrame {
             try {
                 ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
                 DocTrace docTrace = new DocTrace(nationalCode, selectItem.getValue());
-                int insert = docTraceService.insert(docTrace);
-                if(insert == 1){
+                BaseResponse<Double> insert = docTraceService.insert(docTrace);
+                if(insert.getData().intValue() == 1){
                     count++;
                 }
             } catch (Exception ex) {

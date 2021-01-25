@@ -106,8 +106,14 @@ public class DocTrace {
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
 //        this.dateTime = LocalDateTime.now();
-        int data = docTraceService.getMaxLevel(barcode).getData() == null ? 0 : docTraceService.getMaxLevel(barcode).getData()+1;
-        this.level = data;
+        BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(barcode);
+        if(maxLevel.getStatus() == 200){
+            this.level = maxLevel.getData().intValue()+1;
+        }else if(maxLevel.getStatus() == 201){
+            this.level = 1;
+        }else{
+            throw new ArithmeticException(maxLevel.getMessage());
+        }
     }
 
     public DocTrace(String barcode) throws Exception {
@@ -124,16 +130,13 @@ public class DocTrace {
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
 //        this.dateTime = LocalDateTime.now();
-        BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(barcode);
-        Integer i = 0;
+        BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(barcode);
         if(maxLevel.getStatus() == 200){
-            i = Integer.valueOf(String.valueOf(Math.round(maxLevel.getData())));
+            this.level = maxLevel.getData().intValue()+1;
         }else if(maxLevel.getStatus() == 201){
-            i = 0;
+            this.level = 1;
         }else{
             throw new ArithmeticException(maxLevel.getMessage());
         }
-        this.level = i;
-    }
-    
+    }    
 }

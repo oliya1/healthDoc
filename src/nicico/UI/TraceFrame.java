@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
 import nicico.model.Sick;
 import nicico.model.User;
@@ -236,10 +237,10 @@ public class TraceFrame extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {                                        
             DocTrace docTrace = null;
-            maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
-            Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel).findFirst();
+            BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
+            Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel.getData().intValue()).findFirst();
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
-            if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocationId())){                
+            if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocation().getId())){                
                     try {
                         ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
                         docTrace = new DocTrace(txtBarcode.getText(), selectItem.getValue());
@@ -250,8 +251,8 @@ public class TraceFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    System.out.println(maxDocTrace.getReceiverId());
-                    if(maxDocTrace.getReceiverId() != 0){
+//                    System.out.println(maxDocTrace.getReceiver().getId());
+                    if(maxDocTrace.getReceiver().getId() != 0){
                         docTrace.setId(maxDocTrace.getId());
                         docTraceService.update(docTrace);
                         JLabel messageLabel = new JLabel("اطلاعات با موفقیت ویرایش شد.",JLabel.RIGHT);
@@ -333,15 +334,15 @@ public class TraceFrame extends javax.swing.JFrame {
                 txtBarcode.setEnabled(false);
                 btnSabt.setEnabled(true);
                 btnSave.setEnabled(true);                
-                docTraces = docTraceService.getByBarcode(Long.valueOf(txtBarcode.getText()));
-                for(DocTrace d : docTraces){
+                List<DocTrace> byBarcode = docTraceService.getByBarcode(Long.valueOf(txtBarcode.getText()));
+                for(DocTrace d : byBarcode){
                     int[] date = DateConverter.gregorian_to_jalali(d.getDateTime().getYear(), d.getDateTime().getMonthValue(), d.getDateTime().getDayOfMonth());
-                    Optional<User> sender = users.stream().filter(u->u.getId()==d.getSenderId()).findFirst();
-                    Optional<User> receiver = users.stream().filter(u->u.getId()==d.getReceiverId()).findFirst();
+                    Optional<User> sender = users.stream().filter(u->u.getId()==d.getSender().getId()).findFirst();
+                    Optional<User> receiver = users.stream().filter(u->u.getId()==d.getReceiver().getId()).findFirst();
                     model.addRow(new Object[]{
                         receiver.orElse(new User().setName("-")).getName(),
                         sender.orElse(new User().setName("-")).getName(),
-                        locationService.getById(d.getLocationId()).getName(),
+                        d.getLocation().getName(),
                         d.getDateTime().getHour()+":"+d.getDateTime().getMinute(),
                         date[0]+"/"+date[1]+"/"+date[2],
                         d.getLevel()
@@ -373,12 +374,12 @@ public class TraceFrame extends javax.swing.JFrame {
     private void btnSabtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSabtActionPerformed
         try {
             // TODO add your handling code here:
-            maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
+            maxLevel = docTraceService.getMaxLevel(txtBarcode.getText()).getData().intValue();
             if(maxLevel>0){
                 DocTrace maxDocTrace = docTraces.stream().filter(d->d.getLevel()==maxLevel).findFirst().get();
                 loginedUser = userService.getUser(Common.getLoginedUserName());
-                if(maxDocTrace.getLocationId()!= loginedUser.getLocation().getId()){
-                    if(maxDocTrace.getReceiverId() != loginedUser.getId()){
+                if(maxDocTrace.getLocation().getId()!= loginedUser.getLocation().getId()){
+                    if(maxDocTrace.getReceiver().getId() != loginedUser.getId()){
                         JLabel messageLabel = new JLabel("پرونده به شما ارجاع داده نشده است.",JLabel.RIGHT);
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
                     }
@@ -409,7 +410,7 @@ public class TraceFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     List<User> users = new ArrayList<>();
-    List<DocTrace> docTraces;
+    List<DocTrace> docTraces = new ArrayList<>();
     final UserService userService = new UserService();
     final DocTraceService docTraceService = new DocTraceService();
     final LocationService locationService = new LocationService();

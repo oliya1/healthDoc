@@ -5,22 +5,25 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "doc_location_history")
 public class DocLocationHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doc_seq")
+    @SequenceGenerator(name = "doc_seq", sequenceName = "doc_location_history_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "barcode")
-    private String barcode;
+    private Long barcode;
 
     @Column(name = "date_time")
     @CreationTimestamp
-    private LocalDateTime dateTime;
+    private Date dateTime;
 
     @Column(name = "doc_level")
     private Integer level;

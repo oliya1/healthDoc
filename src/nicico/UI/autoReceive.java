@@ -200,11 +200,11 @@ public class AutoReceive extends javax.swing.JFrame {
             String nationalCode = tblRecevie.getValueAt(i, 0).toString();
             try {
                 DocTrace docTrace = new DocTrace(nationalCode);
-                int insert = docTraceService.insert(docTrace);
+                int insert = docTraceService.insert(docTrace).getData().intValue();
                 if(insert == 1){
                     count++;
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(AutoReceive.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
