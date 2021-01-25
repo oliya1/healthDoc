@@ -19,7 +19,7 @@ public class DocLocationHistory {
     private Long id;
 
     @Column(name = "barcode")
-    private Long barcode;
+    private String barcode;
 
     @Column(name = "date_time")
     @CreationTimestamp

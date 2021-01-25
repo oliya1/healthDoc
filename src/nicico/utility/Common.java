@@ -175,7 +175,6 @@ public class Common {
         //Send request
         DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream ());
-//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
         wr.write(urlParameters.getBytes());
         wr.flush ();
         wr.close ();

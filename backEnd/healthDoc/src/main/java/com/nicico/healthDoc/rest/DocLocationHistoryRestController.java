@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @RestController
@@ -18,10 +20,10 @@ public class DocLocationHistoryRestController {
     final private DocLocationHistoryRepository docLocationHistoryRepository;
 
     @GetMapping("/{barcode}")
-    public ResponseEntity<BaseResponse<List<DocLocationHistory>>> getByBarcode(@PathVariable Long barcode){
+    public ResponseEntity<BaseResponse<List<DocLocationHistory>>> getByBarcode(@PathVariable String barcode){
         BaseResponse<List<DocLocationHistory>> response;
         try {
-            List<DocLocationHistory> docs = docLocationHistoryRepository.findAllByBarcode(barcode);
+            List<DocLocationHistory> docs = docLocationHistoryRepository.findByBarcode(barcode);
             response = new BaseResponse<List<DocLocationHistory>>().setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(docs);
         }
         catch(Exception e){

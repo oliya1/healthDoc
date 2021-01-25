@@ -6,9 +6,12 @@
 package nicico.UI;
 import java.awt.ComponentOrientation;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -320,7 +323,7 @@ public class TraceFrame extends javax.swing.JFrame {
     private void txtBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyReleased
         // TODO add your handling code here:  
         DefaultTableModel model = (DefaultTableModel) grid.getModel();        
-        if(evt.getKeyChar() == '\n'){
+        if(evt == null || evt.getKeyChar() == '\n'){
             try {
                 model.setRowCount(0);
                 Sick sick = sickService.getByNationalCode(txtBarcode.getText());
@@ -334,16 +337,24 @@ public class TraceFrame extends javax.swing.JFrame {
                 txtBarcode.setEnabled(false);
                 btnSabt.setEnabled(true);
                 btnSave.setEnabled(true);                
-                List<DocTrace> byBarcode = docTraceService.getByBarcode(Long.valueOf(txtBarcode.getText()));
-                for(DocTrace d : byBarcode){
-                    int[] date = DateConverter.gregorian_to_jalali(d.getDateTime().getYear(), d.getDateTime().getMonthValue(), d.getDateTime().getDayOfMonth());
-                    Optional<User> sender = users.stream().filter(u->u.getId()==d.getSender().getId()).findFirst();
-                    Optional<User> receiver = users.stream().filter(u->u.getId()==d.getReceiver().getId()).findFirst();
+                docTraces = docTraceService.getByBarcode(txtBarcode.getText());
+                Calendar calendar = Calendar.getInstance();
+                for(DocTrace d : docTraces){                    
+                    calendar.setTime(d.getDateTime());
+                    int[] date = DateConverter.gregorian_to_jalali(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+                    Optional<User> sender = Optional.empty();
+                    Optional<User> receiver = Optional.empty();
+                    if(d.getSender()!=null){
+                        sender = users.stream().filter(u->Objects.equals(u.getId(),d.getSender().getId())).findFirst();
+                    }
+                    if(d.getReceiver()!=null){
+                        receiver = users.stream().filter(u->u.getId()==d.getReceiver().getId()).findFirst();
+                    }
                     model.addRow(new Object[]{
                         receiver.orElse(new User().setName("-")).getName(),
                         sender.orElse(new User().setName("-")).getName(),
                         d.getLocation().getName(),
-                        d.getDateTime().getHour()+":"+d.getDateTime().getMinute(),
+                        d.getDateTime().getHours()+":"+d.getDateTime().getMinutes(),
                         date[0]+"/"+date[1]+"/"+date[2],
                         d.getLevel()
                     });
@@ -410,7 +421,7 @@ public class TraceFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     List<User> users = new ArrayList<>();
-    List<DocTrace> docTraces = new ArrayList<>();
+    List<DocTrace> docTraces;
     final UserService userService = new UserService();
     final DocTraceService docTraceService = new DocTraceService();
     final LocationService locationService = new LocationService();

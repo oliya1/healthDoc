@@ -5,6 +5,7 @@
  */
 package nicico.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -85,7 +86,7 @@ public class DocTraceService {
         return response;
     }
     
-    public List<DocTrace> getByBarcode(Long barcode) throws Exception{
+    public List<DocTrace> getByBarcode(String barcode) throws Exception{
 //        PreparedStatement ps = db.getConnection().prepareStatement("select * from workflow where barcode = ? order by wf_level desc");
 //        ps.setLong(1, barcode);
 //        ResultSet rs = ps.executeQuery();
@@ -102,8 +103,10 @@ public class DocTraceService {
 //        }
 //        return docTraces;
         String data = Common.getJSON("doc-history/" + barcode, 3000);
-        Gson gson = new Gson();
-        BaseResponse<List<DocTrace>> fromJson = gson.fromJson(data, new TypeToken<BaseResponse<ArrayList<DocTrace>>>(){}.getType());
+        ObjectMapper mapper = new ObjectMapper();
+        BaseResponse<List<DocTrace>> fromJson = mapper.readValue(data, new TypeReference<BaseResponse<List<DocTrace>>>(){});
+//        Gson gson = new Gson();
+//        BaseResponse<List<DocTrace>> fromJson = gson.fromJson(data, new TypeReference<BaseResponse<ArrayList<DocTrace>>>(){});
 //        BaseResponse<List<DocTrace>> fromJson = SingltonGson.getGson().fromJson(data, BaseResponse.class);
 //        System.out.println(fromJson.getMessage());
         List<DocTrace> docs = fromJson.getData();

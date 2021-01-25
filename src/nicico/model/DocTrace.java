@@ -8,6 +8,7 @@ package nicico.model;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import nicico.service.DocTraceService;
@@ -22,7 +23,7 @@ import oracle.jdbc.OracleDatabaseException;
 public class DocTrace {
     private Long id;
     private String barcode;
-    private LocalDateTime dateTime;    
+    private Date dateTime;    
     private Integer level;
     private Integer cycle;
     private User sender;
@@ -52,11 +53,19 @@ public class DocTrace {
         return this.receiver;
     }
     
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Date getDateTime() {
+        return this.dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public Location getLocation() {
+        return location;
+    }   
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -68,28 +77,24 @@ public class DocTrace {
         this.cycle = cycle;
     }
 
-    public void setSenderId(User sender) {
+    public void setSender(User sender) {
         this.sender = sender;
     }
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
-    }  
-
-    public Location getLocation() {
-        return location;
     }
 
-    public void setLocationId(Location location) {
+    public void setLocation(Location location) {
         this.location = location;
-    }   
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void setBarcode(String barcode){
+        this.barcode = barcode;
     }
 
     public DocTrace(String barcode, String receiver) throws Exception {
