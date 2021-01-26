@@ -65,7 +65,7 @@ public class UserService {
 //        return ps.executeUpdate();
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(user);
-        String excutePost = Common.excutePost("user/hamed", jsonString);
+        String excutePost = Common.excutePost("user/hamed", jsonString, "POST");
         System.out.println(excutePost);
         BaseResponse response = SingltonGson.getGson().fromJson(excutePost, BaseResponse.class);
         return response;

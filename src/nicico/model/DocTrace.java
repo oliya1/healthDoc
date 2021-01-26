@@ -23,7 +23,8 @@ import oracle.jdbc.OracleDatabaseException;
 public class DocTrace {
     private Long id;
     private String barcode;
-    private Date dateTime;    
+    private Date dateTime;
+    private Date lastUpdate; 
     private Integer level;
     private Integer cycle;
     private User sender;
@@ -63,6 +64,14 @@ public class DocTrace {
 
     public Long getId() {
         return id;
+    }
+    
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public void setDateTime(Date dateTime) {
@@ -111,7 +120,7 @@ public class DocTrace {
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
 //        this.dateTime = LocalDateTime.now();
-        BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(barcode);
+        BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(barcode);
         if(maxLevel.getStatus() == 200){
             this.level = maxLevel.getData().intValue()+1;
         }else if(maxLevel.getStatus() == 201){
@@ -135,7 +144,7 @@ public class DocTrace {
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;
 //        this.dateTime = LocalDateTime.now();
-        BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(barcode);
+        BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(barcode);
         if(maxLevel.getStatus() == 200){
             this.level = maxLevel.getData().intValue()+1;
         }else if(maxLevel.getStatus() == 201){

@@ -222,7 +222,7 @@ public class AutoSend extends javax.swing.JFrame {
             try {
                 ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
                 DocTrace docTrace = new DocTrace(nationalCode, selectItem.getValue());
-                BaseResponse<Double> insert = docTraceService.insert(docTrace);
+                BaseResponse<Integer> insert = docTraceService.insert(docTrace);
                 if(insert.getData().intValue() == 1){
                     count++;
                 }

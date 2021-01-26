@@ -240,7 +240,7 @@ public class TraceFrame extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {                                        
             DocTrace docTrace = null;
-            BaseResponse<Double> maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
+            BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
             Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel.getData().intValue()).findFirst();
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
             if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocation().getId())){                
@@ -255,10 +255,10 @@ public class TraceFrame extends javax.swing.JFrame {
                         return;
                     }
 //                    System.out.println(maxDocTrace.getReceiver().getId());
-                    if(maxDocTrace.getReceiver().getId() != 0){
+                    if(maxDocTrace.getReceiver() != null){
                         docTrace.setId(maxDocTrace.getId());
-                        docTraceService.update(docTrace);
-                        JLabel messageLabel = new JLabel("اطلاعات با موفقیت ویرایش شد.",JLabel.RIGHT);
+                        BaseResponse<Integer> update = docTraceService.update(docTrace);
+                        JLabel messageLabel = new JLabel(update.getMessage(),JLabel.RIGHT);
                         JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
                         txtBarcodeKeyReleased(null);
                         return;
@@ -389,7 +389,7 @@ public class TraceFrame extends javax.swing.JFrame {
             if(maxLevel>0){
                 DocTrace maxDocTrace = docTraces.stream().filter(d->d.getLevel()==maxLevel).findFirst().get();
                 loginedUser = userService.getUser(Common.getLoginedUserName());
-                if(maxDocTrace.getLocation().getId()!= loginedUser.getLocation().getId()){
+                if(maxDocTrace.getLocation().equals(loginedUser.getLocation())){
                     if(maxDocTrace.getReceiver().getId() != loginedUser.getId()){
                         JLabel messageLabel = new JLabel("پرونده به شما ارجاع داده نشده است.",JLabel.RIGHT);
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);

@@ -151,14 +151,14 @@ public class Common {
         }
     }
     
-    public static String excutePost(String targetURL, String urlParameters){
+    public static String excutePost(String targetURL, String urlParameters, String method){
       targetURL = "http://localhost:8080/api/" + targetURL;
       HttpURLConnection connection = null;  
       try {
         //Create connection
         URL url = new URL(targetURL);
         connection = (HttpURLConnection)url.openConnection();
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod(method);
         connection.setRequestProperty("Content-Type", 
              "application/json");
         connection.setRequestProperty("custom-Header", "XYZ");

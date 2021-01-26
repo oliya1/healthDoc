@@ -2,6 +2,7 @@ package com.nicico.healthDoc.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +25,10 @@ public class DocLocationHistory {
     @Column(name = "date_time")
     @CreationTimestamp
     private Date dateTime;
+
+    @Column(name = "date_update")
+    @UpdateTimestamp
+    private Date lastUpdate;
 
     @Column(name = "doc_level")
     private Integer level;
