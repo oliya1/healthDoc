@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import nicico.model.User;
 import nicico.service.UserService;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 
 /**
  *
@@ -117,40 +117,6 @@ public class Common {
         return null;
     }
     
-    public static void postRequest(String url, String urlParameters) throws IOException{
-        url = "https://httpbin.org/post";
-//        urlParameters = "name=Jack&occupation=programmer";
-        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-        HttpURLConnection con = null;
-        try {
-            URL myurl = new URL(url);
-            con = (HttpURLConnection) myurl.openConnection();
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "Java client");
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.write(postData);
-            StringBuilder content;
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-            String line;
-            content = new StringBuilder();
-
-            while ((line = br.readLine()) != null) {
-                content.append(line);
-                content.append(System.lineSeparator());
-            }
-           
-
-            System.out.println(content.toString());
-
-        } finally {
-
-            con.disconnect();
-        }
-    }
-    
     public static String excutePost(String targetURL, String urlParameters, String method){
       targetURL = "http://localhost:8080/api/" + targetURL;
       HttpURLConnection connection = null;  
@@ -162,7 +128,6 @@ public class Common {
         connection.setRequestProperty("Content-Type", 
              "application/json");
         connection.setRequestProperty("custom-Header", "XYZ");
-
         connection.setRequestProperty("Content-Length", "" + 
                  Integer.toString(urlParameters.getBytes().length));
         connection.setRequestProperty("Content-Language", "en-US");  
@@ -170,15 +135,13 @@ public class Common {
         connection.setUseCaches (false);
         connection.setDoInput(true);
         connection.setDoOutput(true);
-
-
+        
         //Send request
         DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream ());
         wr.write(urlParameters.getBytes());
         wr.flush ();
         wr.close ();
-
         //Get Response    
         InputStream is = connection.getInputStream();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -198,20 +161,5 @@ public class Common {
           connection.disconnect(); 
         }
       }
-    }
-    
-
-    public JSONObject prepareReqJsonObj(String s1,String s2,String s3,String s4,String s5,String s6) throws JsonProcessingException{
-        JSONObject jsonobj = new JSONObject();
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(new User());
-        jsonobj.put("name", s1);
-        jsonobj.put("emailid", s2);
-        jsonobj.put("mobile",s3 );
-        jsonobj.put("machineKey",s4 );
-        jsonobj.put("productkey", s5);
-        jsonobj.put("serialNo", s6);
-
-        return jsonobj; 
     }
 }

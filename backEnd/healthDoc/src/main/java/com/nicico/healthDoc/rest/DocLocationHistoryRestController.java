@@ -5,23 +5,26 @@ import com.nicico.healthDoc.dto.request.DocLocationUpdateDto;
 import com.nicico.healthDoc.entity.DocLocationHistory;
 import com.nicico.healthDoc.mapper.DocLocationHistoryMapper;
 import com.nicico.healthDoc.response.BaseResponse;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.AopInvocationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Data
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/doc-history")
 public class DocLocationHistoryRestController {
     final private DocLocationHistoryRepository docLocationHistoryRepository;
-    final private DocLocationHistoryMapper docLocationMapper;
+
+    @Autowired
+    private DocLocationHistoryMapper docLocationMapper;
 
     @GetMapping("/{barcode}")
     public ResponseEntity<BaseResponse<List<DocLocationHistory>>> getByBarcode(@PathVariable String barcode){
@@ -71,8 +74,8 @@ public class DocLocationHistoryRestController {
         try {
             Optional<DocLocationHistory> byId = docLocationHistoryRepository.findById(id);
             DocLocationHistory docLocationHistory = byId.orElseThrow(Exception::new);
-            docLocationMapper.updateDocLocationFromDto(docLocationUpdateDto, docLocationHistory);
-            docLocationHistoryRepository.saveAndFlush(docLocationHistory);
+            DocLocationHistory docLocationHistoryUpdated = docLocationMapper.updateDocLocationFromDto(docLocationUpdateDto, docLocationHistory);
+            docLocationHistoryRepository.saveAndFlush(docLocationHistoryUpdated);
             response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(1);
         } catch(Exception e){
             response.setStatus(500).setMessage("ارتباط با پایگاه داده برقرار نشد.").setData(0);

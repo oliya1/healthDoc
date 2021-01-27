@@ -17,7 +17,6 @@ import nicico.model.BaseResponse;
 import nicico.model.Location;
 import nicico.utility.Common;
 import nicico.utility.SingltonGson;
-import org.json.JSONObject;
 
 public class UserService {
 //    private DataBase db = DataBase.getInstance();

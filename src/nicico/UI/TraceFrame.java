@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -328,7 +329,7 @@ public class TraceFrame extends javax.swing.JFrame {
                 model.setRowCount(0);
                 Sick sick = sickService.getByNationalCode(txtBarcode.getText());
                 if(sick == null){
-                    JLabel messageLabel = new JLabel("بارکد وارد شده در سیستم وجود ندارد.",JLabel.RIGHT);
+                    JLabel messageLabel = new JLabel("مشخصاتی برای بارکد وارد شده در سیستم وجود ندارد",JLabel.RIGHT);
                     JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
@@ -339,8 +340,8 @@ public class TraceFrame extends javax.swing.JFrame {
                 btnSave.setEnabled(true);                
                 docTraces = docTraceService.getByBarcode(txtBarcode.getText());
                 Calendar calendar = Calendar.getInstance();
-                for(DocTrace d : docTraces){                    
-                    calendar.setTime(d.getDateTime());
+                for(DocTrace d : docTraces){
+                    calendar.setTime(d.getLastUpdate() != null ? d.getLastUpdate() : d.getDateTime());
                     int[] date = DateConverter.gregorian_to_jalali(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
                     Optional<User> sender = Optional.empty();
                     Optional<User> receiver = Optional.empty();
