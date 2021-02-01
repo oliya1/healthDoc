@@ -3,7 +3,7 @@ import com.nicico.healthDoc.dto.request.DocLocationUpdateDto;
 import com.nicico.healthDoc.entity.DocLocationHistory;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN)
+@Mapper(componentModel = "spring")
 public interface DocLocationHistoryMapper {
-    DocLocationHistory updateDocLocationFromDto(DocLocationUpdateDto dto, @MappingTarget DocLocationHistory entity);
+    void updateDocLocationFromDto(DocLocationUpdateDto dto, @MappingTarget DocLocationHistory entity);
 }

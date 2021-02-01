@@ -5,8 +5,6 @@ import com.nicico.healthDoc.dao.UserRepository;
 import com.nicico.healthDoc.entity.User;
 import com.nicico.healthDoc.response.BaseResponse;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
-@RequiredArgsConstructor
+@Data
 @RestController
 @RequestMapping("/api/user")
 class UserRestController {
