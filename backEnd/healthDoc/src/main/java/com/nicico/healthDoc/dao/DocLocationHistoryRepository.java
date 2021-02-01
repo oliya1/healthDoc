@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DocLocationHistoryRepository extends JpaRepository<DocLocationHistory, Long> {
-    List<DocLocationHistory> findByBarcode(String barcode);
+    List<DocLocationHistory> findByBarcodeOrderByLevelDesc(String barcode);
 
     @Query(value = "select max(doc_level) from doc_location_history where barcode = ?", nativeQuery = true)
     Optional<Integer> getMaxLevel(String barcode);
