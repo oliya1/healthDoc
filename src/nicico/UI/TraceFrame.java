@@ -355,11 +355,10 @@ public class TraceFrame extends javax.swing.JFrame {
                         receiver.orElse(new User().setName("-")).getName(),
                         sender.orElse(new User().setName("-")).getName(),
                         d.getLocation().getName(),
-                        calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE),
+                        d.getDateTime().getHours()+":"+d.getDateTime().getMinutes(),
                         date[0]+"/"+date[1]+"/"+date[2],
                         d.getLevel()
                     });
-                    
                 }               
                 
             } catch (Exception ex) {

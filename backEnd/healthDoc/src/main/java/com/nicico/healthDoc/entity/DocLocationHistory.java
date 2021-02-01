@@ -5,11 +5,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "doc_location_history", indexes = @Index(columnList = "barcode"))
+@Table(name = "doc_location_history")
 public class DocLocationHistory {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

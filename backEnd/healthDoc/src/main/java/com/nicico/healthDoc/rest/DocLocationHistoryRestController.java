@@ -30,7 +30,7 @@ public class DocLocationHistoryRestController {
     public ResponseEntity<BaseResponse<List<DocLocationHistory>>> getByBarcode(@PathVariable String barcode){
         BaseResponse<List<DocLocationHistory>> response;
         try {
-            List<DocLocationHistory> docs = docLocationHistoryRepository.findByBarcodeOrderByLevelDesc(barcode);
+            List<DocLocationHistory> docs = docLocationHistoryRepository.findByBarcode(barcode);
             response = new BaseResponse<List<DocLocationHistory>>().setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(docs);
         }
         catch(Exception e){

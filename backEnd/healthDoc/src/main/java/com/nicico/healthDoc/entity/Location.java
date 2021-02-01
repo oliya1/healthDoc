@@ -1,11 +1,7 @@
 package com.nicico.healthDoc.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.util.Date;
 
 
 @Data
@@ -13,8 +9,7 @@ import java.util.Date;
 @Table(name = "location")
 public class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_seq")
-    @SequenceGenerator(name = "location_seq", sequenceName = "location_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loc_id")
     private Long id;
 

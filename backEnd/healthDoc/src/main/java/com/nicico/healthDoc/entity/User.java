@@ -9,20 +9,19 @@ import javax.persistence.*;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tbl_user_seq")
-    @SequenceGenerator(name = "tbl_user_seq", sequenceName = "tbl_user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name")
     private String userName;
 
 //    @Column(name = "usr_loc_id")
     @ManyToOne
-    @JoinColumn(name = "usr_loc_id", nullable = false)
+    @JoinColumn(name = "usr_loc_id")
     private Location location;
 
     @Column(name = "rule")

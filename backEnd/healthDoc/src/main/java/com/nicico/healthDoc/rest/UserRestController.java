@@ -43,6 +43,7 @@ class UserRestController {
             @PathVariable String userName,
             @RequestBody User user
     ){
+        System.out.println(userName);
         try {
             userRepository.saveAndFlush(user);
             return new ResponseEntity<>(new BaseResponse().setStatus(200).setMessage("عملیات با موفقیت انجام شد") ,HttpStatus.OK);
