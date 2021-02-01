@@ -42,6 +42,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
 <<<<<<< HEAD
+<<<<<<< HEAD
               <EmptySpace pref="47" max="32767" attributes="0"/>
               <Component id="btnRemove" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -51,6 +52,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="15" max="32767" attributes="0"/>
 =======
+=======
+>>>>>>> parent of c9556f2... complete map struct implement
               <EmptySpace max="32767" attributes="0"/>
               <Component id="btnRemove" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -59,11 +62,15 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="23" max="32767" attributes="0"/>
+<<<<<<< HEAD
+>>>>>>> parent of c9556f2... complete map struct implement
+=======
 >>>>>>> parent of c9556f2... complete map struct implement
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="lblCount" min="-2" pref="81" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="txtRecevie" alignment="1" max="32767" attributes="0"/>
+<<<<<<< HEAD
 <<<<<<< HEAD
                       <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
@@ -78,12 +85,17 @@
                           </Group>
                       </Group>
 =======
+=======
+>>>>>>> parent of c9556f2... complete map struct implement
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="cmbSend" min="-2" pref="128" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
+<<<<<<< HEAD
+>>>>>>> parent of c9556f2... complete map struct implement
+=======
 >>>>>>> parent of c9556f2... complete map struct implement
                   </Group>
               </Group>
@@ -102,6 +114,7 @@
                   <Component id="cmbSend" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -112,10 +125,15 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="257" max="-2" attributes="0"/>
 =======
+=======
+>>>>>>> parent of c9556f2... complete map struct implement
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lblCount" min="-2" pref="17" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="243" max="32767" attributes="0"/>
+<<<<<<< HEAD
+>>>>>>> parent of c9556f2... complete map struct implement
+=======
 >>>>>>> parent of c9556f2... complete map struct implement
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -204,6 +222,7 @@
       </AuxValues>
     </Component>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x639;&#x644;&#x62a; &#x627;&#x631;&#x62c;&#x627;&#x639;:"/>
@@ -219,6 +238,8 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
+=======
+>>>>>>> parent of c9556f2... complete map struct implement
 =======
 >>>>>>> parent of c9556f2... complete map struct implement
   </SubComponents>
