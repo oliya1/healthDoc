@@ -22,9 +22,7 @@ import java.util.Optional;
 @RequestMapping("/api/doc-history")
 public class DocLocationHistoryRestController {
     final private DocLocationHistoryRepository docLocationHistoryRepository;
-
-    @Autowired
-    private DocLocationHistoryMapper docLocationMapper;
+    final private DocLocationHistoryMapper docLocationMapper;
 
     @GetMapping("/{barcode}")
     public ResponseEntity<BaseResponse<List<DocLocationHistory>>> getByBarcode(@PathVariable String barcode){

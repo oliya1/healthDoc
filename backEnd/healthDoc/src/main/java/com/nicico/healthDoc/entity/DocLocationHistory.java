@@ -46,4 +46,8 @@ public class DocLocationHistory {
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private User receiver;
+
+    @ManyToOne
+    @JoinColumn(name = "reason_send_id")
+    private ReasonSend reasonSend;
 }

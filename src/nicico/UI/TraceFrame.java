@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
+import nicico.model.ReasonSend;
 import nicico.model.Sick;
 import nicico.model.User;
 import nicico.service.DocTraceService;
@@ -123,14 +124,14 @@ public class TraceFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ارجاع به", "ارجاع از", "محل پرونده", "ساعت", "تاریخ", "مرحله"
+                "علت ارجاع", "ارجاع به", "ارجاع از", "محل پرونده", "ساعت", "تاریخ", "مرحله"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -173,7 +174,7 @@ public class TraceFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(101, 101, 101)
@@ -234,7 +235,7 @@ public class TraceFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(575, 377));
+        setSize(new java.awt.Dimension(655, 377));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -246,10 +247,11 @@ public class TraceFrame extends javax.swing.JFrame {
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
             if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocation().getId())){                
                     try {
-                        ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
-                        docTrace = new DocTrace(txtBarcode.getText(), selectItem.getValue());
+                        User selectItem = (User) cmbSend.getSelectedItem();
+//                        ReasonSend reasonSend = (ReasonSend)cmbReason.getSelectedItem();
+                        docTrace = new DocTrace(txtBarcode.getText(), selectItem, null);
                     }
-                    catch (SQLException ex) {
+                    catch (Exception ex) {
                         Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
                         JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
                         JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
@@ -294,14 +296,15 @@ public class TraceFrame extends javax.swing.JFrame {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         grid.setDefaultRenderer(Integer.class, centerRenderer);        
         grid.setDefaultRenderer(String.class, centerRenderer);
-        grid.getColumnModel().getColumn(5).setPreferredWidth(30);
+        grid.setDefaultRenderer(Object.class, centerRenderer);
+        grid.getColumnModel().getColumn(6).setPreferredWidth(30);
 
         lblUser.setText("کاربر: " + Common.getLoginedUser().getName() + " (" + new LocationService().getById(Common.getLoginedUser().getLocation().getId()).getName() + ")");
         btnSabt.setEnabled(false);
         btnSave.setEnabled(false);
         users = userService.getUsers();
         List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
-        collect.forEach(u->cmbSend.addItem(new ComboItem(u.getName(),u.getUserName())));
+        collect.forEach(u->cmbSend.addItem(u));
         } catch (Exception ex) {
             Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
@@ -352,6 +355,7 @@ public class TraceFrame extends javax.swing.JFrame {
                         receiver = users.stream().filter(u->u.getId()==d.getReceiver().getId()).findFirst();
                     }
                     model.addRow(new Object[]{
+                        d.getReasonSend(),
                         receiver.orElse(new User().setName("-")).getName(),
                         sender.orElse(new User().setName("-")).getName(),
                         d.getLocation().getName(),
@@ -440,7 +444,7 @@ public class TraceFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSabt;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<ComboItem> cmbSend;
+    private javax.swing.JComboBox<User> cmbSend;
     private javax.swing.JTable grid;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

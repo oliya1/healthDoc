@@ -30,6 +30,7 @@ public class DocTrace {
     private User sender;
     private User receiver;
     private Location location;
+    private ReasonSend reasonSend;
 
     public DocTrace() {
     }
@@ -106,16 +107,26 @@ public class DocTrace {
         this.barcode = barcode;
     }
 
-    public DocTrace(String barcode, String receiver) throws Exception {
+    public ReasonSend getReasonSend() {
+        return reasonSend;
+    }
+
+    public void setReasonSend(ReasonSend reasonSend) {
+        this.reasonSend = reasonSend;
+    }
+
+    public DocTrace(String barcode, User receiver, ReasonSend reasonSend) throws Exception {
+        
         final DocTraceService docTraceService = new DocTraceService();
         final UserService userService = new UserService();
         this.barcode = barcode;
-        this.receiver = userService.getUser(receiver);
+        this.receiver = receiver;
         User sender = userService.getUser(Common.getLoginedUserName());
         this.sender = sender;
 //        this.senderId = new UserService().getUser(Common.getLoginedUserName()).getId();
         this.cycle = 1;
         this.location = sender.getLocation();
+        this.reasonSend = reasonSend;
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 //        String input = "2020-05-07T10:05:05.301011" ;
 //        LocalDateTime ldt = LocalDateTime.parse( input ) ;

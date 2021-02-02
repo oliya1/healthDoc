@@ -19,8 +19,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
+import nicico.model.ReasonSend;
 import nicico.model.User;
 import nicico.service.DocTraceService;
+import nicico.service.ReasonSendService;
 import nicico.service.UserService;
 import nicico.utility.Common;
 
@@ -56,7 +58,7 @@ public class AutoSend extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbSend = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbReason = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("ارسال خودکار");
@@ -136,6 +138,10 @@ public class AutoSend extends javax.swing.JFrame {
         cmbSend.setName("cmbSend"); // NOI18N
 
         jLabel1.setText("علت ارجاع:");
+        jLabel1.setFocusable(false);
+
+        cmbReason.setFocusable(false);
+        cmbReason.setName("cmbReason"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,7 +163,7 @@ public class AutoSend extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cmbSend, 0, 128, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cmbReason, 0, 128, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
@@ -176,7 +182,7 @@ public class AutoSend extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblCount, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,8 +238,9 @@ public class AutoSend extends javax.swing.JFrame {
         for(int i=0; i<tblRecevie.getModel().getRowCount(); i++){
             String nationalCode = tblRecevie.getValueAt(i, 0).toString();
             try {
-                ComboItem selectItem = (ComboItem) cmbSend.getSelectedItem();
-                DocTrace docTrace = new DocTrace(nationalCode, selectItem.getValue());
+                User selectItem = (User) cmbSend.getSelectedItem();
+                ReasonSend reasonSend = (ReasonSend)cmbReason.getSelectedItem();
+                DocTrace docTrace = new DocTrace(nationalCode, selectItem, reasonSend);
                 BaseResponse<Integer> insert = docTraceService.insert(docTrace);
                 if(insert.getData().intValue() == 1){
                     count++;
@@ -283,7 +290,10 @@ public class AutoSend extends javax.swing.JFrame {
         try {
             users = userService.getUsers();
             List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
-            collect.forEach(u->cmbSend.addItem(new ComboItem(u.getName(),u.getUserName())));
+            reasons = reasonSendService.reasons();
+            collect.forEach(u->cmbSend.addItem(u));
+            reasons.forEach(r->cmbReason.addItem(r));
+           
         } catch (Exception ex) {
             Logger.getLogger(AutoSend.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
@@ -294,46 +304,48 @@ public class AutoSend extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AutoSend().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AutoReceive.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AutoSend().setVisible(true);
+//            }
+//        });
+//    }
     List<User> users = new ArrayList<>();
+    List<ReasonSend> reasons;
     final UserService userService = new UserService();
+    final ReasonSendService reasonSendService = new ReasonSendService();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JComboBox<ComboItem> cmbSend;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<ReasonSend> cmbReason;
+    private javax.swing.JComboBox<User> cmbSend;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
