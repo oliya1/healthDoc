@@ -19,11 +19,11 @@ import nicico.utility.Common;
  */
 public class ReasonSendService {
     ObjectMapper mapper = new ObjectMapper();
-    public List<ReasonSend> reasons() throws IOException{
+    public BaseResponse<List<ReasonSend>> reasons() throws IOException{
         String data = Common.getJSON("reason-send/", 3000);        
         BaseResponse<List<ReasonSend>> fromJson = mapper.readValue(data, new TypeReference<BaseResponse<List<ReasonSend>>>(){});
-        List<ReasonSend> reasons = fromJson.getData();
-        return reasons;
+//        List<ReasonSend> reasons = fromJson.getData();
+        return fromJson;
     }
     
     public BaseResponse<Integer> create(ReasonSend reasonSend) throws IOException{

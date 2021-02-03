@@ -6,6 +6,7 @@
 package nicico.model;
 
 import nicico.utility.Common;
+import nicico.utility.MySinglton;
 
 /**
  *
@@ -21,7 +22,7 @@ public class ReasonSend {
 
     public ReasonSend(String name) throws Exception {
         this.name = name;
-        this.creator = Common.getLoginedUser();
+        this.creator = MySinglton.getLoginedUser();
     }
 
     public Long getId() {

@@ -1,22 +1,13 @@
 package nicico.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nicico.data.DataBase;
 import nicico.model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nicico.model.BaseResponse;
-import nicico.model.Location;
 import nicico.utility.Common;
-import nicico.utility.SingltonGson;
+import nicico.utility.MySinglton;
 
 public class UserService {
 //    private DataBase db = DataBase.getInstance();
@@ -36,7 +27,7 @@ public class UserService {
 //        db.closeConnection();
 //        return users;
         String data = Common.getJSON("user/", 3000);
-        User[] users = SingltonGson.getGson().fromJson(data, User[].class);
+        User[] users = MySinglton.getGson().fromJson(data, User[].class);
         return Arrays.asList(users);
     }
     public User getUser(String userName) throws Exception{
@@ -52,7 +43,7 @@ public class UserService {
 //            user.setRule(rs.getString("rule"));
 //        }
         String data = Common.getJSON("user/" + userName, 3000);
-        User user = SingltonGson.getGson().fromJson(data, User.class);
+        User user = MySinglton.getGson().fromJson(data, User.class);
         return user;
     }
     public BaseResponse createUser(User user) throws Exception{
@@ -66,7 +57,7 @@ public class UserService {
         String jsonString = mapper.writeValueAsString(user);
         String excutePost = Common.excutePost("user/hamed", jsonString, "POST");
         System.out.println(excutePost);
-        BaseResponse response = SingltonGson.getGson().fromJson(excutePost, BaseResponse.class);
+        BaseResponse response = MySinglton.getGson().fromJson(excutePost, BaseResponse.class);
         return response;
     }
 //    public static void main(String[] args) throws JsonProcessingException{
@@ -80,7 +71,7 @@ public class UserService {
 //        String jsonString = mapper.writeValueAsString(user);
 //        String excutePost = Common.excutePost("user/hamed", jsonString);
 //        System.out.println(excutePost);
-//        BaseResponse response = SingltonGson.getGson().fromJson(excutePost, BaseResponse.class);
+//        BaseResponse response = MySinglton.getGson().fromJson(excutePost, BaseResponse.class);
 //        System.out.println(response.getMessag());
 //    }
 }

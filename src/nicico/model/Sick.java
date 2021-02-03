@@ -6,17 +6,27 @@
 package nicico.model;
 
 import nicico.utility.Common;
+import nicico.utility.MySinglton;
 
 /**
  *
  * @author Hamed
  */
 public class Sick {
+    private Long id;
     private String fname;
     private String lname;
     private Integer personnelNo;
     private String nationalCode;
-    private String createBy;
+    private User createBy;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFname() {
         return fname;
@@ -50,7 +60,7 @@ public class Sick {
         this.nationalCode = nationalCode;
     }
 
-    public String getCreateBy() {
+    public User getCreateBy() {
         return createBy;
     }
     
@@ -59,7 +69,7 @@ public class Sick {
         this.lname = lname;
         this.personnelNo = personnelNo;
         this.nationalCode = nationalCode;
-        this.createBy = Common.getLoginedUserName();
+        this.createBy = MySinglton.getLoginedUser();
     }
 
     public Sick() {

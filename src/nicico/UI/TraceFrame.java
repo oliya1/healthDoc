@@ -4,13 +4,9 @@
  * and open the template in the editor.
  */
 package nicico.UI;
-import java.awt.ComponentOrientation;
-import java.awt.Font;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,10 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
-import nicico.model.ReasonSend;
 import nicico.model.Sick;
 import nicico.model.User;
 import nicico.service.DocTraceService;
@@ -33,6 +27,7 @@ import nicico.service.SickService;
 import nicico.service.UserService;
 import nicico.utility.Common;
 import nicico.utility.DateConverter;
+import nicico.utility.MySinglton;
 
 /**
  *
@@ -245,7 +240,7 @@ public class TraceFrame extends javax.swing.JFrame {
             BaseResponse<Integer> maxLevel = docTraceService.getMaxLevel(txtBarcode.getText());
             Optional<DocTrace> findFirst = docTraces.stream().filter(d->d.getLevel()== maxLevel.getData().intValue()).findFirst();
             DocTrace maxDocTrace = findFirst.orElse(docTrace);
-            if((maxDocTrace != null) && (Common.getLoginedUser().getLocation().getId() == maxDocTrace.getLocation().getId())){                
+            if((maxDocTrace != null) && (MySinglton.getLoginedUser().getLocation().getId() == maxDocTrace.getLocation().getId())){                
                     try {
                         User selectItem = (User) cmbSend.getSelectedItem();
 //                        ReasonSend reasonSend = (ReasonSend)cmbReason.getSelectedItem();
@@ -299,7 +294,7 @@ public class TraceFrame extends javax.swing.JFrame {
         grid.setDefaultRenderer(Object.class, centerRenderer);
         grid.getColumnModel().getColumn(6).setPreferredWidth(30);
 
-        lblUser.setText("کاربر: " + Common.getLoginedUser().getName() + " (" + new LocationService().getById(Common.getLoginedUser().getLocation().getId()).getName() + ")");
+        lblUser.setText("کاربر: " + MySinglton.getLoginedUser().getName() + " (" + new LocationService().getById(MySinglton.getLoginedUser().getLocation().getId()).getName() + ")");
         btnSabt.setEnabled(false);
         btnSave.setEnabled(false);
         users = userService.getUsers();
@@ -330,13 +325,13 @@ public class TraceFrame extends javax.swing.JFrame {
         if(evt == null || evt.getKeyChar() == '\n'){
             try {
                 model.setRowCount(0);
-                Sick sick = sickService.getByNationalCode(txtBarcode.getText());
-                if(sick == null){
-                    JLabel messageLabel = new JLabel("مشخصاتی برای بارکد وارد شده در سیستم وجود ندارد",JLabel.RIGHT);
+                BaseResponse<Sick> sick = sickService.getByPersonnelNo(Integer.valueOf(txtBarcode.getText()));
+                if(sick.getStatus() != 200){
+                    JLabel messageLabel = new JLabel(sick.getMessage(),JLabel.RIGHT);
                     JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                    lblSick.setText("پرونده: "+sick.getFname()+ " "+ sick.getLname());
+                    lblSick.setText("پرونده: "+sick.getData().getFname()+ " "+ sick.getData().getLname());
                 }
                 txtBarcode.setEnabled(false);
                 btnSabt.setEnabled(true);
@@ -381,7 +376,7 @@ public class TraceFrame extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             new MainFrame().setVisible(true);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TraceFrame.class.getName()).log(Level.SEVERE, null, ex);
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
             JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);

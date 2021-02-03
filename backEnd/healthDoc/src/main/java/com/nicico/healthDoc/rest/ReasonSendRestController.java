@@ -34,7 +34,7 @@ public class ReasonSendRestController {
     public ResponseEntity<BaseResponse<Integer>> create(@RequestBody ReasonSend reasonSend){
         BaseResponse<Integer> response = new BaseResponse<>();
         try {
-            ReasonSend save = reasonSendRepository.saveAndFlush(reasonSend);
+            reasonSendRepository.saveAndFlush(reasonSend);
             response.setStatus(200).setMessage("عملیات با موفقیت انجام شد.").setData(1);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){

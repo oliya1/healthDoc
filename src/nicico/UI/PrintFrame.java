@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import nicico.model.BaseResponse;
 import nicico.model.Sick;
 import nicico.service.SickService;
 import nicico.utility.Common;
@@ -194,10 +195,15 @@ public class PrintFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Sick sick = new Sick(txtFName.getText(), txtLName.getText(),Integer.parseInt(txtPersonnelNo.getText()),txtNationalCode.getText());
         try {
-            new SickService().create(sick);
-            JLabel messageLabel = new JLabel("اطلاعات با موفقیت ثبت شد.",JLabel.RIGHT);
-            JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
+            BaseResponse<Integer> create = new SickService().create(sick);
+            if(create.getData()==1){
+                JLabel messageLabel = new JLabel("اطلاعات با موفقیت ثبت شد.",JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JLabel messageLabel = new JLabel("ارتباط با پایگاه داده برقرار نشد.",JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
             JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
             JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(PrintFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -218,7 +224,7 @@ public class PrintFrame extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             new MainFrame().setVisible(true);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(PrintFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowClosing

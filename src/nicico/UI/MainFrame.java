@@ -5,10 +5,12 @@
  */
 package nicico.UI;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+//import java.io.FileNotFoundException;
+import java.io.IOException;
+//import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +31,13 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.data.JRCsvDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
+//import net.sf.jasperreports.engine.data.JRCsvDataSource;
+//import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import nicico.utility.Common;
+import nicico.utility.MySinglton;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -49,10 +51,10 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFram
      */
-    public MainFrame() throws SQLException {
+    public MainFrame(){
         initComponents();
         try{
-            if(Common.getLoginedUser().getRule() == null){
+            if(MySinglton.getLoginedUser().getRule() == null){
                 btnAdmin.setEnabled(false);
                 btnAutoReceive.setEnabled(false);
                 btnAutoSend.setEnabled(false);
@@ -196,7 +198,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         try {
             // TODO add your handling code here:
-            if(Common.getLoginedUser().getRule().equalsIgnoreCase("admin")){
+            if(MySinglton.getLoginedUser().getRule().equalsIgnoreCase("admin")){
                 new PrintFrame().setVisible(true);
                 this.dispose();
             }
@@ -214,22 +216,18 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         try {
             // TODO add your handling code here:
-            if(Common.getLoginedUser().getRule().equalsIgnoreCase("admin")){
+            if(MySinglton.getLoginedUser().getRule().equalsIgnoreCase("admin")){
                 new AdminFrame().setVisible(true);
             }
             else{
                 msg.setText("شما به فرم مدیریت دسترسی ندارید");
                 JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            msg.setText("اتصال به دیتا بیس برقرار نشد.");
+        } catch (Exception ex) {
+            msg.setText("خطای ناشناخته لطفا به ادمین گزارش دهید.");
             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(Exception ex){
-            msg.setText("شما به فرم مدیریت دسترسی ندارید");
-            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
-        }
-                
+        }                
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnGPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGPrintActionPerformed
@@ -269,8 +267,7 @@ public class MainFrame extends javax.swing.JFrame {
                 file.close();
                 createJasperViewer(personnelNoList);
             } 
-            catch (Exception e) {
-                    e.printStackTrace();
+            catch (HeadlessException | IOException | JRException e) {
                     msg.setText("فرمت فایل انتخاب شده باید xlsx باشد.");
                     JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
                 }
@@ -308,38 +305,38 @@ public class MainFrame extends javax.swing.JFrame {
         JasperPrint fillReport = JasperFillManager.fillReport(report, null, dataSource);
         JasperViewer.viewReport(fillReport, false);
     }
-    private void createVcs(List<String> list) throws JRException, FileNotFoundException {
-        PrintWriter pw = null;
-        try {
-            pw = new PrintWriter(new File("NewData.csv"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        StringBuilder builder = new StringBuilder();
-        String columnNamesList = "p1 p2 p3 p4 p5";
-        builder.append(columnNamesList +"\n");
-        int i = 0;
-        String row = "";
-        for(String s : list){
-            row += s;
-            i++;
-            if(i%5 != 0){
-                row += " ";
-                continue;
-            }
-            builder.append(row + "\n");
-            row = "";
-        }
-        builder.append(row);
-        pw.write(builder.toString());
-        pw.close();
-        System.out.println("done!");
-        FileInputStream file = new FileInputStream("src/nicico/report/barcode.jasper");
-        JasperReport name = (JasperReport) JRLoader.loadObject(file);
-        JRCsvDataSource jrCsvDataSource = new JRCsvDataSource(JRLoader.getLocationInputStream("NewData.csv"));
-        JasperPrint fillReport = JasperFillManager.fillReport(name, null, jrCsvDataSource);        
-        JasperViewer.viewReport(fillReport);       
-    }
+//    private void createVcs(List<String> list) throws JRException, FileNotFoundException {
+//        PrintWriter pw = null;
+//        try {
+//            pw = new PrintWriter(new File("NewData.csv"));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        StringBuilder builder = new StringBuilder();
+//        String columnNamesList = "p1 p2 p3 p4 p5";
+//        builder.append(columnNamesList +"\n");
+//        int i = 0;
+//        String row = "";
+//        for(String s : list){
+//            row += s;
+//            i++;
+//            if(i%5 != 0){
+//                row += " ";
+//                continue;
+//            }
+//            builder.append(row + "\n");
+//            row = "";
+//        }
+//        builder.append(row);
+//        pw.write(builder.toString());
+//        pw.close();
+//        System.out.println("done!");
+//        FileInputStream file = new FileInputStream("src/nicico/report/barcode.jasper");
+//        JasperReport name = (JasperReport) JRLoader.loadObject(file);
+//        JRCsvDataSource jrCsvDataSource = new JRCsvDataSource(JRLoader.getLocationInputStream("NewData.csv"));
+//        JasperPrint fillReport = JasperFillManager.fillReport(name, null, jrCsvDataSource);        
+//        JasperViewer.viewReport(fillReport);       
+//    }
     private JLabel msg;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

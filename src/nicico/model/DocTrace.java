@@ -5,16 +5,10 @@
  */
 package nicico.model;
 
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import nicico.service.DocTraceService;
 import nicico.service.UserService;
 import nicico.utility.Common;
-import oracle.jdbc.OracleDatabaseException;
 
 /**
  *

@@ -6,14 +6,11 @@
 package nicico.UI;
 
 import java.awt.ComponentOrientation;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import nicico.model.DocTrace;
 import nicico.service.DocTraceService;
 
@@ -240,7 +237,7 @@ public class AutoReceive extends javax.swing.JFrame {
         this.dispose();
         try {
             new MainFrame().setVisible(true);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AutoReceive.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowClosing

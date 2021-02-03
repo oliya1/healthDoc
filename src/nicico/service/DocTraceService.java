@@ -7,24 +7,10 @@ package nicico.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import nicico.data.DataBase;
 import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
-import nicico.model.Location;
 import nicico.utility.Common;
-import nicico.utility.SingltonGson;
 
 /**
  *

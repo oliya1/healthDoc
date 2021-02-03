@@ -5,18 +5,13 @@
  */
 package nicico.service;
 
-import com.google.gson.Gson;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import nicico.data.DataBase;
 import nicico.model.Location;
 import nicico.utility.Common;
-import nicico.utility.SingltonGson;
+import nicico.utility.MySinglton;
 
 /**
  *
@@ -34,7 +29,7 @@ public class LocationService {
 //            location.setName(rs.getString("loc_name"));
 //        }
         String data = Common.getJSON("location/" + id, 3000);
-        Location location = SingltonGson.getGson().fromJson(data, Location.class);
+        Location location = MySinglton.getGson().fromJson(data, Location.class);
         return location;
     } 
     public List<Location> getAll() throws SQLException, IOException{
@@ -48,7 +43,7 @@ public class LocationService {
 //            locations.add(location);
 //        }
         String data = Common.getJSON("location/", 3000);
-        Location[] locations = SingltonGson.getGson().fromJson(data, Location[].class);
+        Location[] locations = MySinglton.getGson().fromJson(data, Location[].class);
         return Arrays.asList(locations);
     }
 }

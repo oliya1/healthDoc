@@ -60,9 +60,9 @@ public class Common {
         return System.getProperty("user.name");
 //                return "ham";
     }
-    public static User getLoginedUser() throws Exception {
-        return userService.getUser(getLoginedUserName());
-    }
+//    public static User getLoginedUser() throws Exception {
+//        return userService.getUser(getLoginedUserName());
+//    }
     
     public static void setUIFont (javax.swing.plaf.FontUIResource f){
     java.util.Enumeration keys = UIManager.getDefaults().keys();

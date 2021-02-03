@@ -6,11 +6,9 @@
 package nicico;
 
 import java.awt.Font;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableCellRenderer;
 import nicico.UI.MainFrame;
 import nicico.utility.Common;
 
@@ -31,7 +29,7 @@ public class AppStart {
                 UIManager.put("OptionPane.okButtonText", "تایید");
                 try {
                     new MainFrame().setVisible(true);
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(AppStart.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

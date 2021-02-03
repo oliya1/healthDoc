@@ -6,17 +6,14 @@
 package nicico.UI;
 
 import java.awt.ComponentOrientation;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import nicico.model.BaseResponse;
 import nicico.model.DocTrace;
 import nicico.model.ReasonSend;
@@ -147,28 +144,27 @@ public class AutoSend extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCount, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtRecevie, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbSend, 0, 225, Short.MAX_VALUE)
+                            .addComponent(cmbReason, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addGap(100, 100, 100)
                 .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 37, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblCount, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtRecevie)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cmbSend, 0, 128, Short.MAX_VALUE)
-                                .addComponent(cmbReason, 0, 128, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)))))
-                .addGap(24, 24, 24))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +277,7 @@ public class AutoSend extends javax.swing.JFrame {
         this.dispose();
         try {
             new MainFrame().setVisible(true);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AutoSend.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowClosing
@@ -290,7 +286,13 @@ public class AutoSend extends javax.swing.JFrame {
         try {
             users = userService.getUsers();
             List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
-            reasons = reasonSendService.reasons();
+            BaseResponse<List<ReasonSend>> reasonsBase = reasonSendService.reasons();
+            if(reasonsBase.getStatus()!=200){
+                JLabel messageLabel = new JLabel(reasonsBase.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }else{
+                reasons = reasonsBase.getData();
+            }
             collect.forEach(u->cmbSend.addItem(u));
             reasons.forEach(r->cmbReason.addItem(r));
            
