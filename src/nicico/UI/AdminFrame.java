@@ -63,6 +63,9 @@ public class AdminFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -278,6 +281,16 @@ public class AdminFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveReasonSendActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+        try {
+            new MainFrame().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(AutoReceive.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
     private LocationService locationService;
     private ReasonSendService reasonSendService = new ReasonSendService();            
     private User user;

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="barcode1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d496a13c-c585-4175-8d00-ebef5654b5ac">
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="barcode1" columnCount="8" pageWidth="540" pageHeight="732" columnWidth="63" leftMargin="16" rightMargin="16" topMargin="4" bottomMargin="4" uuid="d496a13c-c585-4175-8d00-ebef5654b5ac">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="inch"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -12,6 +14,9 @@
 	<field name="p3" class="java.lang.String"/>
 	<field name="p4" class="java.lang.String"/>
 	<field name="p5" class="java.lang.String"/>
+	<field name="p6" class="java.lang.String"/>
+	<field name="p7" class="java.lang.String"/>
+	<field name="p8" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -25,67 +30,55 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="70" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="14" y="26" width="98" height="20" uuid="e5f240cd-e068-4d93-a2ed-c8c6c043bc24">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{p1}]]></textFieldExpression>
-			</textField>
+		<band height="120" splitType="Stretch">
 			<componentElement>
-				<reportElement x="14" y="0" width="98" height="26" uuid="83a8102d-a2fa-49a1-8dea-ea539a088ac3"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+				<reportElement x="10" y="15" width="53" height="91" uuid="83a8102d-a2fa-49a1-8dea-ea539a088ac3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
 					<jr:codeExpression><![CDATA[$F{p1}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<componentElement>
-				<reportElement x="160" y="0" width="94" height="26" uuid="d8191298-b8bc-47a2-94fb-b52a1e500eac"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+				<reportElement x="74" y="15" width="53" height="91" uuid="a0ae8528-da7e-4ec5-a4b6-f2b5faafd1eb"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
 					<jr:codeExpression><![CDATA[$F{p2}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="26" width="94" height="20" uuid="dcb73e7e-ae3f-4335-90ba-83ecbdbd77cd">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{p2}]]></textFieldExpression>
-			</textField>
 			<componentElement>
-				<reportElement x="305" y="0" width="94" height="26" uuid="745a92f0-0e9c-4916-a6b6-9b983ff350f8"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+				<reportElement x="137" y="15" width="53" height="91" uuid="cbfd9d01-98c7-4323-b764-488f4d490132"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
 					<jr:codeExpression><![CDATA[$F{p3}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<textField isBlankWhenNull="true">
-				<reportElement x="305" y="26" width="94" height="20" uuid="ebe35e00-f71d-48ae-8464-0841bae2bc62">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{p3}]]></textFieldExpression>
-			</textField>
 			<componentElement>
-				<reportElement x="449" y="1" width="97" height="25" uuid="18cd8d04-f65b-424d-a219-cd0ef27057e8"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+				<reportElement x="200" y="15" width="53" height="91" uuid="312eaccb-28c6-4498-84a2-70c289bb89b7"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
 					<jr:codeExpression><![CDATA[$F{p4}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<textField isBlankWhenNull="true">
-				<reportElement x="449" y="26" width="97" height="20" uuid="b69efdc2-5683-4cc7-8f13-249bd2c4e0b6">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f09927e5-9f5e-4719-9624-f4866fbe131c"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{p4}]]></textFieldExpression>
-			</textField>
+			<componentElement>
+				<reportElement x="264" y="15" width="53" height="91" uuid="f28efe46-6699-4ef0-ad5d-9657c70dfb12"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
+					<jr:codeExpression><![CDATA[$F{p5}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement x="327" y="15" width="53" height="91" uuid="3a70bf69-b07c-464e-853b-46f45f7c1308"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
+					<jr:codeExpression><![CDATA[$F{p6}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement x="389" y="15" width="53" height="91" uuid="4f818c0b-5378-4fd3-a661-d89396505daa"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
+					<jr:codeExpression><![CDATA[$F{p7}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement x="455" y="15" width="53" height="91" uuid="b3550b47-08d2-456c-928f-c628c9e5392c"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="true" checksumRequired="false" rotation="Left">
+					<jr:codeExpression><![CDATA[$F{p8}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>

@@ -69,7 +69,6 @@ public class TraceFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("traceFrame"); // NOI18N
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

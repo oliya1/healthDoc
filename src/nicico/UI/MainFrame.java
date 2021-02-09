@@ -91,9 +91,9 @@ public class MainFrame extends javax.swing.JFrame {
         btnAutoSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("mainFrame"); // NOI18N
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
 
         btnTrace.setText("رهگیری بارکد");
         btnTrace.setFocusable(false);
@@ -218,6 +218,7 @@ public class MainFrame extends javax.swing.JFrame {
             // TODO add your handling code here:
             if(MySinglton.getLoginedUser().getRule().equalsIgnoreCase("admin")){
                 new AdminFrame().setVisible(true);
+                this.dispose();
             }
             else{
                 msg.setText("شما به فرم مدیریت دسترسی ندارید");
@@ -254,7 +255,7 @@ public class MainFrame extends javax.swing.JFrame {
                         if(cell.getCellTypeEnum()!= CellType.NUMERIC){  
                             msg.setText("فرمت فایل اکسل وارد شده صحیح نمیباشد.");
                             JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
-                            return;
+//                            return;
                         }
 //                        if(cell.getStringCellValue().length()!= 10){
 //                            msg.setText("طول اطلاعات سلول 10 کارکتر نیست.");
@@ -292,7 +293,7 @@ public class MainFrame extends javax.swing.JFrame {
         for(String s : list){            
             i++;
             map.put("p"+i, s);
-            if(i==4){
+            if(i==8){
                 maps.add(map);
                 map = new HashMap<>();
                 i=0;
