@@ -75,7 +75,7 @@ public class Common {
     }
     
     public static String getJSON(String url, int timeout) throws IOException {
-        url = "http://localhost:8080/api/" + url;
+        url = "http://10.21.4.64:8080/api/" + url;
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);
@@ -91,7 +91,7 @@ public class Common {
             switch (status) {
                 case 200:
                 case 201:
-                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream(), "UTF-8"));
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
@@ -118,7 +118,7 @@ public class Common {
     }
     
     public static String excutePost(String targetURL, String urlParameters, String method){
-      targetURL = "http://localhost:8080/api/" + targetURL;
+      targetURL = "http://10.21.4.64:8080/api/" + targetURL;
       HttpURLConnection connection = null;  
       try {
         //Create connection
