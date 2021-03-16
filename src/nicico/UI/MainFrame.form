@@ -90,7 +90,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPrint">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x686;&#x627;&#x67e; &#x628;&#x627;&#x631;&#x6a9;&#x62f;"/>
+        <Property name="text" type="java.lang.String" value="&#x67e;&#x631;&#x648;&#x646;&#x62f;&#x647; &#x62c;&#x62f;&#x6cc;&#x62f;"/>
+        <Property name="actionCommand" type="java.lang.String" value=""/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>

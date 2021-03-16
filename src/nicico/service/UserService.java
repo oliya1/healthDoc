@@ -61,6 +61,20 @@ public class UserService {
         BaseResponse response = MySinglton.getGson().fromJson(excutePost, BaseResponse.class);
         return response;
     }
+    
+    public BaseResponse deleteUser(String userName) throws Exception{
+//        PreparedStatement ps = db.getConnection().prepareStatement("insert into tbl_user(user_name, name, usr_loc_id, rule) values(?,?,?,?)");
+//        ps.setString(1, user.getUserName());
+//        ps.setString(2, user.getName());
+//        ps.setLong(3, user.getLocationId());
+//        ps.setString(4, user.getRule());
+//        return ps.executeUpdate();
+        ObjectMapper mapper = new ObjectMapper();
+        String excutePost = Common.excutePost("user/del/" + userName, "", "DELETE");
+        System.out.println(excutePost);
+        BaseResponse response = MySinglton.getGson().fromJson(excutePost, BaseResponse.class);
+        return response;
+    }
 //    public static void main(String[] args) throws JsonProcessingException{
 //        User user = new User();
 //        user.setName("hamed").setUserName("jafari-o");

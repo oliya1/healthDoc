@@ -61,7 +61,7 @@ public class AutoReceive extends javax.swing.JFrame {
 
             },
             new String [] {
-                "کد ملی"
+                "شماره پرونده"
             }
         ) {
             Class[] types = new Class [] {

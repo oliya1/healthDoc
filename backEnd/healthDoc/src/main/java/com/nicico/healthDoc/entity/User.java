@@ -27,4 +27,14 @@ public class User {
 
     @Column(name = "rule")
     private String rule;
+
+    @Column(name = "hidean")
+    private int hidean;
+
+    @Column(name = "version")
+    private int version;
+
+    @ManyToOne
+    @JoinColumn(name = "create_by")
+    private User createBy;
 }

@@ -13,8 +13,13 @@ public class ReasonSend {
     @Id
     @Column(name = "id")
     private Long id;
+
     @Column(name = "reason_name", nullable = false)
     private String name;
+
+//    @Column(name = "version")
+//    private int version;
+
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;

@@ -77,7 +77,7 @@ public class AutoSend extends javax.swing.JFrame {
 
             },
             new String [] {
-                "کد ملی"
+                "شماره پرونده"
             }
         ) {
             Class[] types = new Class [] {
@@ -285,7 +285,7 @@ public class AutoSend extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             users = userService.getUsers();
-            List<User> collect = users.stream().filter(u->!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())).collect(Collectors.toList());
+            List<User> collect = users.stream().filter(u->(!u.getUserName().equalsIgnoreCase(Common.getLoginedUserName())&&u.getHidean()!=1)).collect(Collectors.toList());
             BaseResponse<List<ReasonSend>> reasonsBase = reasonSendService.reasons();
             if(reasonsBase.getStatus()!=200){
                 JLabel messageLabel = new JLabel(reasonsBase.getMessage(),JLabel.RIGHT);

@@ -6,6 +6,33 @@ public class User {
     private String userName;
     private Location location;
     private String rule;
+    private int version;
+    private int hidean;
+    private User createBy;
+
+    public User getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(User createBy) {
+        this.createBy = createBy;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public void setHidean(int hidean) {
+        this.hidean = hidean;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public int getHidean() {
+        return hidean;
+    }
     
     public int getId() {
         return id;

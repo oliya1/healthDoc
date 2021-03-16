@@ -53,4 +53,21 @@ class UserRestController {
             return new ResponseEntity<>(new BaseResponse().setStatus(401).setMessage("نام کاربری تکراری است") ,HttpStatus.OK);
         }
     }
+
+    @DeleteMapping("/del/{userName}")
+    public ResponseEntity<BaseResponse> deleteUser(
+            @PathVariable String userName
+    ){
+        try {
+            Optional<User> byUserName = userRepository.findByUserName(userName);
+            User user = byUserName.orElseThrow(Exception::new);
+            userRepository.delete(user);
+            return new ResponseEntity<>(new BaseResponse().setStatus(200).setMessage("عملیات با موفقیت انجام شد").setData(1) ,HttpStatus.OK);
+        }
+        catch (Exception e){
+            BaseResponse response = new BaseResponse();
+            response.setMessage("");
+            return new ResponseEntity<>(new BaseResponse().setStatus(401).setMessage("خطا در حذف کاربر احتمالا کاربر فوق پرونده دریافت کرده است.").setData(0) ,HttpStatus.OK);
+        }
+    }
 }
