@@ -17,8 +17,8 @@ public class ReasonSend {
     @Column(name = "reason_name", nullable = false)
     private String name;
 
-//    @Column(name = "version")
-//    private int version;
+    @Column(name = "version")
+    private int version;
 
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)

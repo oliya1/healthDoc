@@ -19,11 +19,16 @@ public class MySinglton {
     private static Gson gson;
     private static User loginedUser;
     static{
-        gson = new Gson();
-        try {
-            loginedUser = new UserService().getUser(System.getProperty("user.name"));
-        } catch (Exception ex) {
-            Logger.getLogger(MySinglton.class.getName()).log(Level.SEVERE, null, ex);
+        if(gson == null){
+            gson = new Gson();
+        }
+        if(loginedUser == null){
+            try {
+                loginedUser = new UserService().getUser(System.getProperty("user.name").toLowerCase());
+                System.out.println(System.getProperty("user.name"));
+            } catch (Exception ex) {
+                Logger.getLogger(MySinglton.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public static Gson getGson(){

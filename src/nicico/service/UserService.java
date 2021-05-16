@@ -26,7 +26,7 @@ public class UserService {
 //        }
 //        db.closeConnection();
 //        return users;
-        String data = Common.getJSON("user/", 3000);
+        String data = Common.getJSON("user/", 10000);
         System.out.println("data:" + data);
         User[] users = MySinglton.getGson().fromJson(data, User[].class);
         return Arrays.asList(users);

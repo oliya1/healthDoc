@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 import java.io.IOException;
 //import java.io.PrintWriter;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,16 +34,16 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 //import net.sf.jasperreports.engine.data.JRCsvDataSource;
 //import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import nicico.utility.Common;
+//import nicico.utility.Common;
 import nicico.utility.MySinglton;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.commons.io.FileUtils;
 
 /**
- *
  * @author Hamed
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -55,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         try{
             if(MySinglton.getLoginedUser().getRule() == null){
+                System.out.println(MySinglton.getLoginedUser().getRule());
                 btnAdmin.setEnabled(false);
                 btnAutoReceive.setEnabled(false);
                 btnAutoSend.setEnabled(false);
@@ -64,6 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
             msg = new JLabel("",JLabel.RIGHT);
         }
         catch(Exception e){
+            System.out.println("catch");
             btnAdmin.setEnabled(false);
             btnAutoReceive.setEnabled(false);
             btnAutoSend.setEnabled(false);
@@ -89,6 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAutoReceive = new javax.swing.JButton();
         btnAutoSend = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -130,6 +133,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nicico/UI/cooper_arm.png"))); // NOI18N
         jLabel1.setText("jLabel1");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         btnAutoReceive.setText("دریافت خودکار");
         btnAutoReceive.setFocusable(false);
@@ -147,29 +155,41 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnUpdate.setText("بروزرسانی");
+        btnUpdate.setActionCommand("بروزرسانی");
+        btnUpdate.setFocusable(false);
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnGPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAutoReceive, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAutoSend, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPrint, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAutoReceive, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAutoSend, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTrace)
                         .addGap(18, 18, 18)
@@ -181,9 +201,10 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnGPrint)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAdmin))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addComponent(btnAdmin)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUpdate)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,7 +288,24 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                 }             
                 file.close();
-                createJasperViewer(personnelNoList);
+//                if(personnelNoList.size()>48){
+//                    msg.setText("تعداد شماره های پرسنلی باید کوچتر یا مساوی با 48 عدد باشد");
+//                    JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+//                    return;
+//                }
+                ArrayList<String> printList = new ArrayList<>();
+                for(String s : personnelNoList){
+                    if(printList.size()<35)
+                        printList.add(s);
+                    else{
+                        createJasperViewer(printList);
+                        printList.clear();
+                        printList.add(s);
+                    }
+                }
+                createJasperViewer(printList);
+                
+                
             } 
             catch (HeadlessException | IOException | JRException e) {
                     msg.setText("فرمت فایل انتخاب شده باید xlsx باشد.");
@@ -287,6 +325,31 @@ public class MainFrame extends javax.swing.JFrame {
         new AutoSend().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAutoSendActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        String source = "\\\\fileserver\\ict\\App-Exe\\HealthDoc\\dist";
+        File srcDir = new File(source);
+
+        String destination = "d:\\dist\\";
+        File destDir = new File(destination);
+
+        try {
+            FileUtils.copyDirectory(srcDir, destDir);
+            msg.setText("بروز رسانی انجام شد. لطفا مجددا اجرا نمایید");
+            JOptionPane.showMessageDialog(this, msg, "پیغام", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (IOException e) {
+            msg.setText("فایل نرم افزار کپی نشد.");
+            JOptionPane.showMessageDialog(this, msg, "خطا", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
     private void createJasperViewer(List<String> list) throws JRException{
         List<Map<String,?>> maps = new ArrayList<>();
         int i = 0;
@@ -294,7 +357,7 @@ public class MainFrame extends javax.swing.JFrame {
         for(String s : list){            
             i++;
             map.put("p"+i, s);
-            if(i==8){
+            if(i==7){
                 maps.add(map);
                 map = new HashMap<>();
                 i=0;
@@ -302,7 +365,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         maps.add(map);
         JRDataSource dataSource = new JRBeanCollectionDataSource(maps);
-        String sourceName = "barcode1.jrxml";
+        String sourceName = "barcode2.jrxml";
         JasperReport report = JasperCompileManager.compileReport(sourceName);
         JasperPrint fillReport = JasperFillManager.fillReport(report, null, dataSource);
         JasperViewer.viewReport(fillReport, false);
@@ -348,6 +411,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnGPrint;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnTrace;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

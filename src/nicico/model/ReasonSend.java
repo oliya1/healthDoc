@@ -5,7 +5,7 @@
  */
 package nicico.model;
 
-import nicico.utility.Common;
+//import nicico.utility.Common;
 import nicico.utility.MySinglton;
 
 /**
@@ -15,7 +15,16 @@ import nicico.utility.MySinglton;
 public class ReasonSend {
     private Long id;
     private String name;
-    private User creator;   
+    private User creator;
+    private int version;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
     
     public ReasonSend() {
     }

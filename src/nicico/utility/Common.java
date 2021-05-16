@@ -5,7 +5,6 @@
  */
 package nicico.utility;
 
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -68,7 +67,7 @@ public class Common {
     }
     
     public static String getJSON(String url, int timeout) throws IOException {
-        url = "http://10.21.4.64:8080/api/" + url;
+        url = "http://10.1.254.89:8080/api/" + url;
         HttpURLConnection c = null;
         try {
             URL u = new URL(url);
@@ -111,7 +110,7 @@ public class Common {
     }
     
     public static String excutePost(String targetURL, String urlParameters, String method){
-      targetURL = "http://10.21.4.64:8080/api/" + targetURL;
+      targetURL = "http://10.1.254.89:8080/api/" + targetURL;
       HttpURLConnection connection = null;  
       try {
         //Create connection
@@ -123,8 +122,7 @@ public class Common {
         connection.setRequestProperty("custom-Header", "XYZ");
         connection.setRequestProperty("Content-Length", "" + 
                  Integer.toString(urlParameters.getBytes().length));
-        connection.setRequestProperty("Content-Language", "en-US");  
-      
+        connection.setRequestProperty("Content-Language", "en-US");        
 
         connection.setUseCaches (false);
         connection.setDoInput(true);

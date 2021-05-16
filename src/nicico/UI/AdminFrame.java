@@ -64,6 +64,10 @@ public class AdminFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         txtReasonSend = new javax.swing.JTextField();
         btnSaveReasonSend = new javax.swing.JButton();
+        btnDeleteResonSend = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblReasonSend = new javax.swing.JTable();
+        btnEditReasonSend = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("مدیریت");
@@ -219,7 +223,13 @@ public class AdminFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("تعریف کاربر", jPanel1);
 
-        btnSaveReasonSend.setText("ذخیره");
+        jPanel2.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel2ComponentShown(evt);
+            }
+        });
+
+        btnSaveReasonSend.setText("افزودن");
         btnSaveReasonSend.setFocusable(false);
         btnSaveReasonSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,28 +237,92 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteResonSend.setText("حذف");
+        btnDeleteResonSend.setFocusable(false);
+        btnDeleteResonSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteResonSendActionPerformed(evt);
+            }
+        });
+
+        tblReasonSend.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "شناسه", "علت ارجاع", "ایجاد کننده", "تعداد ویرایش"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblReasonSend.setFocusable(false);
+        tblReasonSend.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblReasonSend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblReasonSendMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblReasonSend);
+        tblReasonSend.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+        btnEditReasonSend.setText("ویرایش");
+        btnEditReasonSend.setFocusable(false);
+        btnEditReasonSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditReasonSendActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(txtReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(btnSaveReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(267, Short.MAX_VALUE))
+                        .addComponent(btnDeleteResonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSaveReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addContainerGap()
                 .addComponent(txtReasonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btnSaveReasonSend)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSaveReasonSend)
+                    .addComponent(btnDeleteResonSend)
+                    .addComponent(btnEditReasonSend))
+                .addContainerGap(333, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGap(89, 89, 89)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jTabbedPane1.addTab("تعریف علت ارجاع", jPanel2);
@@ -263,6 +337,8 @@ public class AdminFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        tblReasonSend.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
         pack();
         setLocationRelativeTo(null);
@@ -294,7 +370,7 @@ public class AdminFrame extends javax.swing.JFrame {
         }
         user = new User();
         user.setName(txtName.getText());
-        user.setUserName(txtUserName.getText());
+        user.setUserName(txtUserName.getText().toLowerCase());
         if(cmbAccess.getSelectedItem().toString().equals("مدیر"))
             user.setRule("admin");
         else if(cmbAccess.getSelectedItem().toString().equals("بایگان"))
@@ -323,26 +399,6 @@ public class AdminFrame extends javax.swing.JFrame {
         txtUserName.setText("");
     }//GEN-LAST:event_btnNewActionPerformed
 
-    private void btnSaveReasonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveReasonSendActionPerformed
-        try {
-            // TODO add your handling code here:
-            ReasonSend reasonSend = new ReasonSend(txtReasonSend.getText());
-            BaseResponse<Integer> create = reasonSendService.create(reasonSend);
-            if(create.getData()==1){
-                JLabel messageLabel = new JLabel(create.getMessage(),JLabel.RIGHT);
-                JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
-                txtReasonSend.setText("");
-            }else{
-                JLabel messageLabel = new JLabel(create.getMessage(),JLabel.RIGHT);
-                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
-            }            
-        } catch (Exception ex) {
-            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
-            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
-            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnSaveReasonSendActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         this.dispose();
@@ -355,7 +411,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
     private void jPanel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel1ComponentShown
         // TODO add your handling code here:
-        refreshTblUsers();
     }//GEN-LAST:event_jPanel1ComponentShown
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -381,6 +436,91 @@ public class AdminFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnDeleteResonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteResonSendActionPerformed
+        // TODO add your handling code here:
+        int rowNo = tblReasonSend.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)tblReasonSend.getModel();
+        Long valueAt = (Long)model.getValueAt(rowNo, 0);
+        try {
+            BaseResponse<Double> delete = reasonSendService.delete(valueAt.intValue());
+            if(delete.getData().intValue() == 1){
+                JLabel messageLabel = new JLabel(delete.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
+                txtReasonSend.setText("");
+                refreshTblReasonSend();
+            }else{
+                JLabel messageLabel = new JLabel(delete.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteResonSendActionPerformed
+
+    private void btnSaveReasonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveReasonSendActionPerformed
+        try {
+            // TODO add your handling code here:
+            ReasonSend reasonSend = new ReasonSend(txtReasonSend.getText());
+            BaseResponse<Integer> create = reasonSendService.create(reasonSend);
+            if(create.getData()==1){
+                JLabel messageLabel = new JLabel(create.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
+                txtReasonSend.setText("");
+                refreshTblReasonSend();
+            }else{
+                JLabel messageLabel = new JLabel(create.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSaveReasonSendActionPerformed
+
+    private void jPanel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentShown
+        // TODO add your handling code here:
+        refreshTblReasonSend();
+    }//GEN-LAST:event_jPanel2ComponentShown
+
+    private void btnEditReasonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReasonSendActionPerformed
+        // TODO add your handling code here:
+        int rowNo = tblReasonSend.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)tblReasonSend.getModel();
+        Long id = (Long)model.getValueAt(rowNo, 0);
+        int version = (int)model.getValueAt(rowNo, 3);
+        ReasonSend reasonSend = new ReasonSend();
+        reasonSend.setName(txtReasonSend.getText());
+        reasonSend.setId(id);
+        reasonSend.setVersion(version);
+        try {
+            BaseResponse<Integer> update = reasonSendService.update(reasonSend);
+            if(update.getData()==1){
+                JLabel messageLabel = new JLabel(update.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "پیغام", JOptionPane.INFORMATION_MESSAGE);
+                txtReasonSend.setText("");
+                refreshTblReasonSend();
+            }else{
+                JLabel messageLabel = new JLabel(update.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditReasonSendActionPerformed
+
+    private void tblReasonSendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblReasonSendMouseClicked
+        // TODO add your handling code here:
+        int rowNo = tblReasonSend.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)tblReasonSend.getModel();
+        String valueAt = (String)model.getValueAt(rowNo, 1);
+        txtReasonSend.setText(valueAt);
+    }//GEN-LAST:event_tblReasonSendMouseClicked
     private void refreshTblUsers(){
         DefaultTableModel model = (DefaultTableModel) tblUser.getModel();
         try {        
@@ -397,6 +537,33 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void refreshTblReasonSend(){
+        DefaultTableModel model = (DefaultTableModel) tblReasonSend.getModel();
+        try {
+            BaseResponse<List<ReasonSend>> reasons = reasonSendService.reasons();
+            model.setRowCount(0);
+            if(reasons.getStatus()!=200){
+                JLabel messageLabel = new JLabel(reasons.getMessage(),JLabel.RIGHT);
+                JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                for(ReasonSend r : reasons.getData()){
+                    model.addRow(new Object[]{
+                        r.getId(),
+                        r.getName(),
+                        r.getCreator(),
+                        r.getVersion()
+                    });
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JLabel messageLabel = new JLabel("ارتباط با سرور برقرار نشد.",JLabel.RIGHT);
+            JOptionPane.showMessageDialog(this, messageLabel, "خطا", JOptionPane.ERROR_MESSAGE);
         }
     }
     private LocationService locationService;
@@ -440,6 +607,8 @@ public class AdminFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteResonSend;
+    private javax.swing.JButton btnEditReasonSend;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveReasonSend;
@@ -452,7 +621,9 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable tblReasonSend;
     private javax.swing.JTable tblUser;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtReasonSend;
